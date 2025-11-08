@@ -1,0 +1,24 @@
+/* src/components/media/MovieView.css */
+
+* {
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    height: 2.5em;
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.btn {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    font-size: .9em;
+}
+
+.youtube-embed iframe {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,56 @@
+/* src/components/user/UserForm.css */
+
+.button-ckbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.button-cell {
+  height: 100%;
+  /* display: flex;
+  justify-content: flex-start;
+  align-items: start; */
+}
+
+.my-button {
+  padding: 0 .75rem;
+  font-size: .75rem;
+  /* height: 1.5rem; */
+  line-height: 1rem;
+  align-self: self-start;
+}
+
+div.bot-button-div {
+  width: 125px;
+  ;
+}
+
+.table-no-padding th,
+.table-no-padding td {
+  padding: 0 !important;
+}
+
+table.user-form,
+tbody.user-form,
+tr.user-form,
+td.user-form {
+  /* border: 1px solid black; */
+  border: 0;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0 !important;
+}
+
+td.centered {
+  text-align: center;
+}
+
+td.righted {
+  text-align: right;
+
+}

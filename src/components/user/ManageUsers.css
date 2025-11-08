@@ -1,0 +1,45 @@
+/* src/components/user/ManageUsers.css */
+
+.ckBoxCol {
+  text-align: center;
+}
+
+.refreshing {
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 100%;
+  text-align: center;
+}
+
+.refresh-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+}
+
+tr:hover {
+  background-color: #D6EEEE;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
+}

@@ -1,0 +1,125 @@
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* text-align: center; */
+    margin-bottom: 2rem;
+}
+
+section.genre-btns {
+    text-align: center;
+    margin: 1rem 0;
+    width: 100%;
+    margin: 3rem 0 1rem 0
+}
+
+button.is-active {
+    background-color: #333;
+    color: white;
+}
+
+button.genre-btn {
+    padding: 0 .75rem;
+    font-size: .75rem;
+    /* height: 1.5rem; */
+    line-height: 1rem;
+}
+
+div.genre-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+    max-width: 600px;
+}
+
+section.current-genre {
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.genre-title {
+    display: flex;
+    flex-wrap: nowrap;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div.genre-nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: .25rem;
+    /* margin-top: 1rem; */
+    margin: 0;
+    padding: 0;
+}
+
+.nav-button {
+    border: 0;
+    background: none;
+    font-size: 1.15em;
+    margin: 0;
+    padding: 0;
+}
+
+.movie-poster {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+section.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
+    margin: 2rem auto;
+    align-items: center;
+    justify-items: center;
+    width: 100%;
+    max-width: 1200px;
+    font-size: .75em;
+
+}
+
+section.movie-grid img:hover {
+    transform: scale(1.05);
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.poster-wrap {
+    position: relative;
+    width: 90px;
+}
+
+.poster-wrap.in-watchlist::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* blue ring */
+    outline: 3px solid #0d6efd;
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.poster-tag {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    padding: 2px 6px;
+    font-size: 11px;
+    background: #0d6efd;
+    color: #fff;
+    border-radius: 4px;
+}

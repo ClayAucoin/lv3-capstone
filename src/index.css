@@ -1,0 +1,43 @@
+/* src/index.css */
+
+.my-container {
+    max-width: 1230px;
+    margin: 30px auto;
+}
+
+.refresh-button {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+img.refresh {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+img.refresh:hover {
+    opacity: 0.8;
+}
+
+img.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+img.icon:hover {
+    opacity: 0.5;
+}
+
+img.eye {
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+}
+
+img.eye:hover {
+    opacity: 0.5;
+}
