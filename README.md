@@ -8,6 +8,8 @@ This is a full-stack **React + Supabase** web app for managing a personal movie 
 
 ## Screenshots
 
+<img src="src/images/1-view-watchlist.png" alt="View Watchlist" width="375"><img src="src/images/2-pick-movie.png" alt="Pick Movie" width="375">
+
 ![View Watchlist](/src/images/1-view-watchlist.png "View Watchlist"){width=375} ![View Watchlist](src/images/2-pick-movie.png "View Watchlist"){width=375}
 
 ![View Watchlist](src/images/3-movie-view.png "View Watchlist"){width=375} ![View Watchlist](src/images/6-analytics.png "View Watchlist"){width=375}
