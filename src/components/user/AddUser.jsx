@@ -46,11 +46,15 @@ export default function AddUser() {
   }, [isTesting]);
 
   async function handleAddUser(payload) {
-    const { error } = await supabase.from("users").insert(payload);
-    if (error) {
-      console.error("AddUser: handleAddUser: ", error.message);
+    try {
+      const { error } = await supabase.from("users").insert(payload);
+      if (error) {
+        console.error("AddUser: handleAddUser: ", error.message);
+      }
+      navigate("/manage-users");
+    } catch (err) {
+      console.log("AddUser: handleAddUser: unexpected error: ", err);
     }
-    navigate("/manage-users");
   }
 
   return (

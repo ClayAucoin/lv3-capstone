@@ -31,16 +31,21 @@ export default function PickMovie() {
   // console.log("genre: ", genre);
 
   async function loadMovies() {
-    const { data, error } = await supabase
-      .from("movies")
-      .select()
-      .order("title");
+    try {
+      const { data, error } = await supabase
+        .from("movies")
+        .select()
+        .order("title");
 
-    if (error) {
-      console.error("refreshMovies error: ", error);
+      if (error) {
+        console.error("loadMovies error: ", error);
+        return;
+      }
+      setData(data);
+      // console.log(data);
+    } catch (err) {
+      console.log("loadMovies: unexpected error: ", err);
     }
-    setData(data);
-    // console.log(data);
   }
 
   useEffect(() => {
@@ -80,21 +85,25 @@ export default function PickMovie() {
   // get users watchlist
   useEffect(() => {
     async function getUserWatchlist() {
-      const { data: watchlist, error } = await supabase
-        .from("watchlist")
-        .select("imdb_id")
-        .eq("user_id", Number(localStorage.getItem("userId")));
+      try {
+        const { data: watchlist, error } = await supabase
+          .from("watchlist")
+          .select("imdb_id")
+          .eq("user_id", Number(localStorage.getItem("userId")));
 
-      if (error) {
-        console.error("Error fetching watchlist:", error.message);
-        return;
+        if (error) {
+          console.error("getUserWatchlist error:", error.message);
+          return;
+        }
+
+        const ids = (watchlist || []).map((w) => w.imdb_id);
+
+        setWatchlistIds(ids);
+        // console.log("imdb ids retrieved:", ids);
+        // console.log("watchlistIds: ", watchlistIds);
+      } catch (err) {
+        console.log("getUserWatchlist: unexpected error: ", err);
       }
-
-      const ids = (watchlist || []).map((w) => w.imdb_id);
-
-      setWatchlistIds(ids);
-      // console.log("imdb ids just fetched:", ids);
-      // console.log("watchlistIds: ", watchlistIds);
     }
     getUserWatchlist();
   }, []);

@@ -20,9 +20,8 @@ export default function AuthAddUser() {
       email: email,
       password: password,
     });
-    console.log("handled");
-    console.log(error);
-    console.log(data);
+    // console.log("addUser: ", email, password);
+    // console.log(data);
     return { user: data.user, error };
   }
 
@@ -33,6 +32,10 @@ export default function AuthAddUser() {
     console.log("handle login: ", email, password);
     const { user, error } = await addUser(email, password);
 
+    if (error) {
+      console.log("addUser error: ", error);
+      return;
+    }
     // setUsername(user);
     // loginComplete(user, error);
   }

@@ -36,38 +36,47 @@ export default function MovieView() {
   }, [genre]);
 
   async function loadSelectedMovie() {
-    // console.log("loadSelectedMovie: imdbID: ", imdbId);
-    const { data, error } = await supabase
-      .from("movies")
-      .select()
-      .eq("imdb_id", imdbId)
-      .maybeSingle();
+    try {
+      // console.log("loadSelectedMovie: imdbID: ", imdbId);
+      const { data, error } = await supabase
+        .from("movies")
+        .select()
+        .eq("imdb_id", imdbId)
+        .maybeSingle();
 
-    if (error) {
-      console.error("loadSelectedMovie error: ", error);
+      if (error) {
+        console.error("loadSelectedMovie error: ", error);
+        return;
+      }
+      setSelectedMovie(data);
+    } catch (err) {
+      console.log("loadSelectedMovie: unexpected error: ", err);
     }
-    setSelectedMovie(data);
   }
 
   async function checkMovieForUser() {
-    const userId = Number(localStorage.getItem("userId"));
-    // console.log("checkMovieForUser: userId: ", userId, "imdbID: ", imdbId);
+    try {
+      const userId = Number(localStorage.getItem("userId"));
+      // console.log("checkMovieForUser: userId: ", userId, "imdbID: ", imdbId);
 
-    const { data, error } = await supabase
-      .from("watchlist")
-      .select()
-      .match({ user_id: userId, imdb_id: imdbId })
-      .maybeSingle();
+      const { data, error } = await supabase
+        .from("watchlist")
+        .select()
+        .match({ user_id: userId, imdb_id: imdbId })
+        .maybeSingle();
 
-    if (error) {
-      console.error("loadSelectedMovie error: ", error);
-      return;
-    }
+      if (error) {
+        console.error("checkMovieForUser error: ", error);
+        return;
+      }
 
-    if (!data) {
-      setMovieInWatchlist(true);
-    } else {
-      setMovieInWatchlist(false);
+      if (!data) {
+        setMovieInWatchlist(true);
+      } else {
+        setMovieInWatchlist(false);
+      }
+    } catch (err) {
+      console.log("checkMovieForUser: unexpected error: ", err);
     }
   }
 
@@ -81,37 +90,45 @@ export default function MovieView() {
   }
 
   async function addMovieToWatchlist() {
-    const userId = Number(localStorage.getItem("userId"));
-    console.log("addMovieToWatchlist: userId: ", userId, "imdbID: ", imdbId);
+    try {
+      const userId = Number(localStorage.getItem("userId"));
+      console.log("addMovieToWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
-    const newItem = {
-      user_id: userId,
-      imdb_id: imdbId,
-    };
-    const { data, error } = await supabase.from("watchlist").insert(newItem);
+      const newItem = {
+        user_id: userId,
+        imdb_id: imdbId,
+      };
+      const { data, error } = await supabase.from("watchlist").insert(newItem);
 
-    if (error) {
-      console.error("addMovieToWatchlist error: ", error);
-      return;
+      if (error) {
+        console.error("addMovieToWatchlist error: ", error);
+        return;
+      }
+      navigate("/view-watchlist");
+    } catch (err) {
+      console.log("addMovieToWatchlist: unexpected error: ", err);
     }
-    navigate("/view-watchlist");
   }
 
   async function removeFromWatchlist() {
-    const userId = Number(localStorage.getItem("userId"));
-    console.log("removeFromWatchlist: userId: ", userId, "imdbID: ", imdbId);
+    try {
+      const userId = Number(localStorage.getItem("userId"));
+      console.log("removeFromWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
-    const { error } = await supabase
-      .from("watchlist")
-      .delete()
-      .eq("user_id", userId)
-      .eq("imdb_id", imdbId);
+      const { error } = await supabase
+        .from("watchlist")
+        .delete()
+        .eq("user_id", userId)
+        .eq("imdb_id", imdbId);
 
-    if (error) {
-      console.error("removeFromWatchlist error: ", error);
-      return;
+      if (error) {
+        console.error("removeFromWatchlist error: ", error);
+        return;
+      }
+      navigate("/view-watchlist");
+    } catch (err) {
+      console.log("removeFromWatchlist: unexpected error: ", err);
     }
-    navigate("/view-watchlist");
   }
 
   function formatTitle() {

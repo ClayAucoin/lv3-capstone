@@ -13,7 +13,7 @@ import {
   Tooltip,
   Legend,
   Title,
-  ArcElement, // needed for Pie
+  ArcElement,
 } from "chart.js";
 
 // import supabase config
@@ -40,7 +40,6 @@ export default function Analytics() {
   useEffect(() => {
     (async () => {
       try {
-        // Pull only what we need
         const { data, error } = await supabase
           .from("movies")
           .select("genres, rating");
@@ -54,7 +53,7 @@ export default function Analytics() {
 
         console.log("movies rows:", data?.length ?? 0);
 
-        // ---- Genres -> Bar
+        // bar chart, by genres
         const genreCounts = (data ?? []).reduce((acc, row) => {
           const genres = (row.genres || "")
             .split(",")
@@ -65,7 +64,6 @@ export default function Analytics() {
         }, {});
 
         const genreEntries = Object.entries(genreCounts);
-        // If you prefer count-desc order, use this sort:
         genreEntries.sort((a, b) => b[1] - a[1]);
 
         const genreLabels = genreEntries.map(
@@ -86,7 +84,7 @@ export default function Analytics() {
           ],
         });
 
-        // ---- Ratings -> Pie
+        // pie chart, by ratings
         const ratingCounts = (data ?? []).reduce((acc, m) => {
           const r = (m.rating || "Unrated").trim();
           acc[r] = (acc[r] || 0) + 1;

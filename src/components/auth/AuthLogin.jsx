@@ -18,9 +18,8 @@ export default function AuthLogin() {
       email: email,
       password: password,
     });
-    console.log("handled");
-    console.log(error);
-    console.log(data);
+    // console.log("signIn: ", email, password);
+    // console.log(data);
     return { user: data.user, error };
   }
 
@@ -31,6 +30,10 @@ export default function AuthLogin() {
     console.log("handle login");
     const { user, error } = await signIn(email, password);
 
+    if (error) {
+      console.log(error);
+      return;
+    }
     setUsername(user);
     // loginComplete(user, error);
   }

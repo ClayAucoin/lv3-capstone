@@ -38,48 +38,59 @@ export default function ManageUsers() {
 
   // refreshImg users for table
   async function refreshUsers() {
-    setLoading(true);
-    const { data: users, error } = await supabase
-      .from("users")
-      .select()
-      .order("first_name");
+    try {
+      setLoading(true);
 
-    if (error) {
-      console.error("refreshUsers error: ", error);
+      const { data: users, error } = await supabase
+        .from("users")
+        .select()
+        .order("first_name");
+
+      if (error) {
+        console.error("refreshUsers error: ", error);
+        return;
+      }
+
+      setUsers(users || []);
+    } catch (err) {
+      console.log("refreshUsers: unexpected error: ", err);
+    } finally {
+      setLoading(false);
     }
-    setUsers(users || []);
-    setLoading(false);
-
-    console.log("users: ", users);
   }
 
   async function refreshAdminUsers(isAdmin) {
-    const flag = isAdmin === true || isAdmin === "true";
-    setLoading(true);
+    try {
+      const flag = isAdmin === true || isAdmin === "true";
+      setLoading(true);
 
-    const { data: users, error } = await supabase
-      .from("users")
-      .select("*")
-      .eq("is_admin", isAdmin)
-      .order("first_name");
+      const { data: users, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("is_admin", isAdmin)
+        .order("first_name");
 
-    if (error) {
-      console.error("refreshUsers error: ", error);
+      if (error) {
+        console.error("refreshUsers error: ", error);
+        return;
+      }
+
+      // console.log("refreshAdminUsers returned: ", users);
+
+      if (flag) {
+        // console.log("if: isAdmin");
+        setAdminUsers(users || []);
+      } else {
+        // console.log("if: !isAdmin");
+        setNonAdminUsers(users || []);
+      }
+
       setLoading(false);
-      return;
+    } catch (err) {
+      console.log("refreshAdminUsers: unexpected error: ", err);
+    } finally {
+      setLoading(false);
     }
-
-    // console.log("refreshAdminUsers returned: ", users);
-
-    if (flag) {
-      console.log("if: isAdmin");
-      setAdminUsers(users || []);
-    } else {
-      console.log("if: !isAdmin");
-      setNonAdminUsers(users || []);
-    }
-
-    setLoading(false);
   }
 
   useEffect(() => {
@@ -90,7 +101,7 @@ export default function ManageUsers() {
 
   // modal confirmations
   function askDeleteUser(user) {
-    console.log("askDeleteUser: ", user);
+    // console.log("askDeleteUser: ", user);
     setConfirm({ show: true, user });
   }
   function closeConfirm() {
@@ -99,22 +110,29 @@ export default function ManageUsers() {
 
   // delete user
   async function confirmDelete() {
-    const id = confirm.user?.id;
-    console.log(`confirmDelete - Deleting: ${id}, typeof: ${typeof id}`);
+    try {
+      const id = confirm.user?.id;
+      // console.log(`confirmDelete - Deleting: ${id}, typeof: ${typeof id}`);
 
-    if (!id) return;
-    setUsers((prev) => prev.filter((u) => u.id !== id));
+      if (!id) return;
 
-    const { error } = await supabase.from("users").delete().eq("id", id);
+      // Optimistic UI update
+      setUsers((prev) => prev.filter((u) => u.id !== id));
 
-    if (error) {
-      console.error("Delete failed: ", error);
-      await refreshUsers();
+      const { error } = await supabase.from("users").delete().eq("id", id);
+
+      if (error) {
+        console.error("confirmDelete: delete failed: ", error);
+        await refreshUsers();
+        return;
+      }
+      closeConfirm();
+    } catch (err) {
+      console.log("confirmDelete: unexpected error: ", err);
     }
-    closeConfirm();
   }
 
-  // is admin or not way 2
+  // for accordion: is admin or not way 2
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -135,8 +153,8 @@ export default function ManageUsers() {
       setAdminUsers2(admins);
       setNonAdminUsers2(nonAdmins);
       setLoading(false);
-      console.log("setAdminUsers2 returned: ", admins);
-      console.log("setNonAdminUsers2 returned: ", nonAdmins);
+      // console.log("setAdminUsers2 returned: ", admins);
+      // console.log("setNonAdminUsers2 returned: ", nonAdmins);
     })();
   }, []);
 

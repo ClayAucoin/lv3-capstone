@@ -2,7 +2,7 @@
 // src/components/UserForm.jsx
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import NoticeModal from "../NoticeModal";
 import "./UserForm.css";
@@ -36,6 +36,14 @@ export default function UserForm({
   const { user } = useAuth();
   // if (!user) return <Navigate to="/login" replace />;
 
+  const location = useLocation();
+  const basePath = location.pathname
+    .replace(/^((?:\/[^/]+){1}).*$/, "$1")
+    .replace(/\/$/, "");
+
+  console.log("user: ", user);
+  console.log("basePath: ", basePath);
+
   useEffect(() => {
     setForm((prev) => ({ ...prev, ...initialValues }));
   }, [initialValues]);
@@ -51,14 +59,18 @@ export default function UserForm({
   async function handleSubmit(e) {
     e.preventDefault();
     // Basic validation
-    if (!form.first_name)
+    if (!form.first_name) {
       return showNotice("Validation", "First name is required.", "warning");
-    if (!form.last_name)
+    }
+    if (!form.last_name) {
       return showNotice("Validation", "Last name is required.", "warning");
-    if (!form.username)
+    }
+    if (!form.username) {
       return showNotice("Validation", "Username is required.", "warning");
-    if (!form.email)
+    }
+    if (!form.email) {
       return showNotice("Validation", "Email is required.", "warning");
+    }
 
     // password rules:
     // - in ADD mode, password is required and must match
@@ -135,18 +147,20 @@ export default function UserForm({
                         </label>
                       </div>
                       <div className="d-flex justify-content-end">
-                        <label className="form-label">
-                          Admin:&nbsp;
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            name="is_admin"
-                            defaultChecked={!!form.is_admin}
-                            onChange={(e) =>
-                              updateField("is_admin", e.target.checked)
-                            }
-                          />
-                        </label>
+                        {user?.is_admin && (
+                          <label className="form-label">
+                            Admin:&nbsp;
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              name="is_admin"
+                              defaultChecked={!!form.is_admin}
+                              onChange={(e) =>
+                                updateField("is_admin", e.target.checked)
+                              }
+                            />
+                          </label>
+                        )}
                       </div>
                     </div>
                   </div>

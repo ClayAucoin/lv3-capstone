@@ -43,17 +43,23 @@ export default function EditUser() {
   }, [id]);
 
   async function handleUpdate(payload) {
-    // omit password if blank
-    const update = { ...payload };
-    if (!update.password) delete update.password;
+    try {
+      // omit password if blank
+      const update = { ...payload };
+      if (!update.password) delete update.password;
 
-    const { error } = await supabase
-      .from("users")
-      .update(update)
-      .eq("id", Number(id));
+      const { error } = await supabase
+        .from("users")
+        .update(update)
+        .eq("id", Number(id));
 
-    if (error) throw error;
-    navigate("/manage-users");
+      if (error) {
+        console.log("AddUser: handleUpdate: ", error);
+      }
+      navigate("/manage-users");
+    } catch (err) {
+      console.log("AddUser: handleUpdate: unexpected error: ", err);
+    }
   }
 
   if (!initial) return <p>Loading user...</p>;

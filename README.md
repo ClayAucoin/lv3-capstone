@@ -8,7 +8,13 @@ This is a full-stack **React + Supabase** web app for managing a personal movie 
 
 ## Screenshots
 
----
+![View Watchlist](/src/images/1-view-watchlist.png "View Watchlist"){width=375} ![View Watchlist](src/images/2-pick-movie.png "View Watchlist"){width=375}
+
+![View Watchlist](src/images/3-movie-view.png "View Watchlist"){width=375} ![View Watchlist](src/images/6-analytics.png "View Watchlist"){width=375}
+
+![View Watchlist](src/images/4-manage-users.png "View Watchlist"){width=375} ![View Watchlist](src/images/5-edit-user.png "View Watchlist"){width=375}
+
+## ![alt text](/img.png "Optional title"){width=350}
 
 https://lv3-capstone.vercel.app
 

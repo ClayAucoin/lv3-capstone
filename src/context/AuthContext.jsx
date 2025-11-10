@@ -28,31 +28,37 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login(username, password) {
-    const { data: userData, error } = await supabase
-      .from("users")
-      .select("id, first_name, last_name, username, email, is_active, is_admin")
-      .eq("username", username.trim())
-      .eq("password", password.trim())
-      .maybeSingle();
+    try {
+      const { data: userData, error } = await supabase
+        .from("users")
+        .select(
+          "id, first_name, last_name, username, email, is_active, is_admin"
+        )
+        .eq("username", username.trim())
+        .eq("password", password.trim())
+        .maybeSingle();
 
-    if (error) {
-      console.error("Supabase error:", error.message);
-      return { user: null, error };
+      if (error) {
+        console.error("login error:", error.message);
+        return { user: null, error };
+      }
+
+      // console.log("AuthContext: login: ", userData);
+
+      if (userData) {
+        localStorage.setItem("userId", String(userData.id));
+        localStorage.setItem("username", userData.username);
+        localStorage.setItem("is_admin", userData.is_admin);
+        setUser(userData, error);
+
+        // console.log("AuthContext: userData: ", userData);
+        return { user: userData, error };
+      }
+
+      return { user: null, error: { message: "No matching user found" } };
+    } catch (err) {
+      console.log("login: unexpected error: ", err);
     }
-
-    // console.log("AuthContext: login: ", userData);
-
-    if (userData) {
-      localStorage.setItem("userId", String(userData.id));
-      localStorage.setItem("username", userData.username);
-      localStorage.setItem("is_admin", userData.is_admin);
-      setUser(userData, error);
-
-      // console.log("AuthContext: userData: ", userData);
-      return { user: userData, error };
-    }
-
-    return { user: null, error: { message: "No matching user found" } };
   }
 
   function logout() {

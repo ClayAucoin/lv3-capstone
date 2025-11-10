@@ -26,39 +26,43 @@ export default function ViewWatchlist() {
   // console.log("currentUser: ", currentUser);
 
   async function getUserWatchlist() {
-    // get the imdb_ids for current user
-    const { data: watchlist, error: watchlistError } = await supabase
-      .from("watchlist")
-      .select("imdb_id")
-      .eq("user_id", Number(localStorage.getItem("userId")));
+    try {
+      // get the imdb_ids for current user
+      const { data: watchlist, error: watchlistError } = await supabase
+        .from("watchlist")
+        .select("imdb_id")
+        .eq("user_id", Number(localStorage.getItem("userId")));
 
-    if (watchlistError) {
-      console.error("Error fetching watchlist:", watchlistError.message);
-      return [];
+      if (watchlistError) {
+        console.error("getUserWatchlist error:", watchlistError.message);
+        return [];
+      }
+
+      // If user has no watchlist entries
+      if (!watchlist?.length) return [];
+
+      // get number of movies in watchlist
+      setMovieCount(watchlist.length);
+
+      // extract imdb_ids and get movie info
+      const imdbIds = watchlist.map((w) => w.imdb_id);
+
+      const { data: movies, error: moviesError } = await supabase
+        .from("movies")
+        .select("id, poster, imdb_id, title")
+        .in("imdb_id", imdbIds)
+        .order("title");
+
+      if (moviesError) {
+        console.error("Error fetching movies:", moviesError.message);
+        return [];
+      }
+
+      setData(movies);
+      // console.log(movies);
+    } catch (err) {
+      console.log("getUserWatchlist: unexpected error: ", err);
     }
-
-    // If user has no watchlist entries
-    if (!watchlist?.length) return [];
-
-    // get number of movies in watchlist
-    setMovieCount(watchlist.length);
-
-    // extract imdb_ids and get movie info
-    const imdbIds = watchlist.map((w) => w.imdb_id);
-
-    const { data: movies, error: moviesError } = await supabase
-      .from("movies")
-      .select("id, poster, imdb_id, title")
-      .in("imdb_id", imdbIds)
-      .order("title");
-
-    if (moviesError) {
-      console.error("Error fetching movies:", moviesError.message);
-      return [];
-    }
-
-    setData(movies);
-    // console.log(movies);
   }
 
   useEffect(() => {
@@ -94,22 +98,26 @@ export default function ViewWatchlist() {
 
   useEffect(() => {
     async function getUser() {
-      const { data: userData, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", Number(localStorage.getItem("userId")))
-        .maybeSingle();
+      try {
+        const { data: userData, error } = await supabase
+          .from("users")
+          .select("*")
+          .eq("id", Number(localStorage.getItem("userId")))
+          .maybeSingle();
 
-      if (error) {
-        console.error("Supabase error:", error.message);
-        return { user: null, error };
+        if (error) {
+          console.error("getUser error:", error.message);
+          return { user: null, error };
+        }
+
+        if (userData) {
+          setCurrentUserName(userData);
+        }
+
+        return { user: null, error: { message: "No matching user found" } };
+      } catch (err) {
+        console.log("getUser: unexpected error: ", err);
       }
-
-      if (userData) {
-        setCurrentUserName(userData);
-      }
-
-      return { user: null, error: { message: "No matching user found" } };
     }
     getUser();
   }, []);

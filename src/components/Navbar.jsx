@@ -15,7 +15,7 @@ export default function Navbar() {
     .replace(/\/$/, "");
 
   // console.log("Navbar: user: ", user);
-  // console.log("Navbar: basePath: ", basePath);
+  console.log("Navbar: basePath: ", basePath);
 
   if (isLoading) return null;
 
@@ -52,12 +52,12 @@ export default function Navbar() {
               <Link to="/manage-users">Manage Users</Link>
             </div>
           )}
-        {user?.is_admin && (
+        {/* {user?.is_admin && (
           <div>
             <span className="divider px-1">|</span>
             <Link to="/auth-login">Auth Login</Link>
           </div>
-        )}
+        )} */}
       </div>
       {user && (
         <div>
