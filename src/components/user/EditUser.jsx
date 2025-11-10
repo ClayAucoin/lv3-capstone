@@ -1,8 +1,13 @@
 // src/components/EditUser.jsx
 
+// import react hooks and components
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import css
 import UserForm from "./UserForm";
 
 export default function EditUser() {

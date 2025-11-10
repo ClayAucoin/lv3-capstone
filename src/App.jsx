@@ -1,30 +1,37 @@
 // src/App.jsx
 
-// import { useState } from "react";
+// import react hooks and components
 import { Routes, Route, Navigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
 
-// protected routes
+// import protected routes
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-// context providers
+// import context providers
 import { ModalProvider } from "./context/ModalContext";
 import { AuthProvider } from "./context/AuthContext";
 
-// login
+// import navbar
+import Navbar from "./components/Navbar";
+
+// import login
 import LoginPage from "./components/LoginPage";
 
-// user module pages
+// auth
+import AuthLogin from "./components/auth/AuthLogin.jsx";
+import AuthAddUser from "./components/auth/AuthAddUser.jsx";
+
+// import user module pages
 import ManageUsers from "./components/user/ManageUsers";
 import EditUser from "./components/user/EditUser";
 import AddUser from "./components/user/AddUser";
 
-// media pages
+// import media pages
 import PickGenre from "./components/media/PickMovie";
 import MovieView from "./components/media/MovieView";
 import ViewWatchlist from "./components/media/ViewWatchlist";
 import Analytics from "./components/media/Analytics";
 
+// import css
 import "./App.css";
 
 export default function App() {
@@ -43,6 +50,17 @@ export default function App() {
                       element={<Navigate to="/login" replace />}
                     />
                     <Route path="/login" element={<LoginPage />} />
+
+                    {/* auth login routes */}
+                    <Route path="/auth-login/" element={<AuthLogin />} />
+                    <Route
+                      path="/auth-add-user"
+                      element={
+                        // <ProtectedRoute>
+                        <AuthAddUser />
+                        // </ProtectedRoute>
+                      }
+                    />
 
                     {/* user module routes */}
                     <Route path="/add-user/" element={<AddUser />} />

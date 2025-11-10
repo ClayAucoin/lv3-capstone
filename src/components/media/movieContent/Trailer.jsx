@@ -1,5 +1,6 @@
 // src/components/media/movieContent/Trailer.jsx
 
+// import components
 import MovieClip from "./MovieClip";
 
 export default function Trailer({ data }) {

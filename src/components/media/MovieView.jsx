@@ -1,15 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 // src/components/media/MovieView.jsx
 
+// import react hooks and components
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import local components
 import Poster from "./movieContent/Poster";
 import Trailer from "./movieContent/Trailer";
 import MovieDescription from "./movieContent/MovieDescription";
 import MovieStats from "./movieContent/MovieStats";
+
+// import css
 import "./MovieView.css";
 
 export default function MovieView() {
@@ -135,17 +143,25 @@ export default function MovieView() {
         </div>
         {currentGenre && (
           <h5 className="mt-2 text-center text-lg-start">
-            {formatGenre(currentGenre)}
+            Genre: {formatGenre(currentGenre)}
           </h5>
         )}
       </nav>
       <header className="my-3">
-        <div className="align-items-center">
+        <div className="text-sm-center text-lg-start text-md-start align-items-start w-100">
           {selectedMovie.title &&
             Number.isFinite(formatTitle(selectedMovie.year)) && (
               <h1 className="display-6 fw-semibold">
-                {selectedMovie.title} (
-                {Math.trunc(formatTitle(selectedMovie.year))})
+                {selectedMovie.title}
+                <h3 className="fs-5 fw-semibold text-muted">
+                  <small className="">
+                    {Math.trunc(formatTitle(selectedMovie.year))}
+                    <span className="mx-1">•</span>
+                    {selectedMovie.rating}
+                    <span className="mx-1">•</span>
+                    {formatTime(selectedMovie.runtime)}
+                  </small>
+                </h3>
               </h1>
             )}
         </div>
@@ -183,4 +199,31 @@ export default function MovieView() {
 function formatGenre(genreString) {
   if (!genreString) return "";
   return genreString.charAt(0).toUpperCase() + genreString.slice(1);
+}
+
+function formatTime(timeStr) {
+  const parts = timeStr.split(":").map(Number);
+
+  let hours = 0,
+    minutes = 0,
+    seconds = 0;
+
+  if (parts.length === 3) {
+    [hours, minutes, seconds] = parts;
+  } else if (parts.length === 2) {
+    [minutes, seconds] = parts;
+  } else if (parts.length === 1) {
+    seconds = parts[0];
+  }
+
+  minutes += Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  hours += Math.floor(minutes / 60);
+  minutes = minutes % 60;
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  } else {
+    return `${minutes}m`;
+  }
 }

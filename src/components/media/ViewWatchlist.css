@@ -1,45 +1,45 @@
 /* src/components/media/ViewWatchlist.css */
 
-section.genre-btns {
+/* section.genre-btns {
     text-align: center;
     margin: 1rem 0;
     width: 100%;
-}
+} */
 
-button.is-active {
+/* button.is-active {
     background-color: #333;
     color: white;
-}
+} */
 
-div.genre-flex {
+/* div.genre-flex {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
     margin-top: 1rem;
     max-width: 600px;
-}
+} */
 
-section.current-genre {
+/* section.current-genre {
     width: 100%;
     text-align: center;
     font-size: 1.5rem;
     margin: 1rem 0;
     font-weight: bold;
-}
+} */
 
-div.genre-nav-buttons {
+/* div.genre-nav-buttons {
     display: flex;
     justify-content: center;
     gap: .25rem;
     margin-top: 1rem;
-}
+} */
 
-button.genre-nav-button {
+/* button.genre-nav-button {
     border: 0px;
     background: none;
     font-size: 1.5em;
-}
+} */
 
 .movie-poster {
     width: 100%;
@@ -53,18 +53,10 @@ article.movie-grid {
     display: grid;
     gap: 5px;
     grid-template-columns: repeat(auto-fit, 90px);
-    /* grid-template-columns: repeat(auto-fit, minmax(90px, max-content)); */
-    /* grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); */
     place-items: center;
-    /* align-items: center; */
-    /* justify-items: center; */
     justify-content: center;
     margin: 2rem auto;
     max-width: 1200px;
-
-    /* width: 100%; */
-    /* max-width: 1200px; */
-    /* font-size: .75em; */
 }
 
 article.movie-grid img:hover {
@@ -73,16 +65,48 @@ article.movie-grid img:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-article.no-movies h2 {
+/* article.no-movies h2 {
     margin-top: 2rem;
     padding: 1rem;
     border: 2px solid #333;
     display: inline-block;
-}
+} */
 
-.add-movie-button {
+/* .-add-movie-button {
     padding: 0 .75rem;
     font-size: .75rem;
-    /* height: 1.5rem; */
     line-height: 1rem;
+} */
+
+.add-has-movies {
+    width: 150px;
+    font-size: .9rem;
+    padding: 0 .5rem;
+}
+
+.add-no-movies {
+    width: 300px;
+    font-size: 1.5rem;
+    padding: 0 .75rem;
+    animation: blink 3s infinite;
+}
+
+.blink-opacity {
+    width: 300px;
+    font-size: 1.5rem;
+    padding: 0 .75rem;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .5;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

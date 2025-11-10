@@ -1,8 +1,13 @@
 // src/components/AddUser.jsx
 
+// import react hooks and components
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import css
 import UserForm from "./UserForm";
 
 export default function AddUser() {

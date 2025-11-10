@@ -6,7 +6,11 @@ This is a full-stack **React + Supabase** web app for managing a personal movie 
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
+
+---
+
+https://lv3-capstone.vercel.app
 
 ---
 

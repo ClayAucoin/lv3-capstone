@@ -1,6 +1,9 @@
 // src/components/NoticeModal.jsx
 
+// import react hooks and components
 import { Modal, Button, Alert } from "react-bootstrap";
+
+// import css
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function NoticeModal(props) {

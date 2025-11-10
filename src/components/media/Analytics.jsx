@@ -1,5 +1,9 @@
 // src/components/media/Analytics.jsx
+
+// import react hooks and components
 import { useEffect, useState } from "react";
+
+// import chart.js components
 import { Bar, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,7 +15,11 @@ import {
   Title,
   ArcElement, // needed for Pie
 } from "chart.js";
+
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import css
 import "./Analytics.css";
 
 ChartJS.register(

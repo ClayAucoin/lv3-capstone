@@ -1,11 +1,15 @@
 // src/components/media/PickMovie.jsx
 
+// import react hooks and components
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-import "./PickMovie.css";
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import css
+import "./PickMovie.css";
 
 export default function PickMovie() {
   const [currentGenre, setCurrentGenre] = useState("");
@@ -64,8 +68,8 @@ export default function PickMovie() {
         key={allGenres[i]}
         id={allGenres[i]}
         onClick={() => currentGenreClick(allGenres[i])}
-        className={`btn btn-primary genre-btn text-capitalize ${
-          allGenres[i] === currentGenre ? "is-active" : ""
+        className={`btn genre-btn text-capitalize btn-${
+          allGenres[i] === currentGenre ? "secondary" : "primary"
         }`}
       >
         {allGenres[i]}
@@ -106,7 +110,7 @@ export default function PickMovie() {
 
       movieGridJSX.push(
         <Link
-          key={movie.imdb_id || i}
+          key={movie.imdb_id}
           to={`/movie-view/${movie.imdb_id}/${currentGenre.toLowerCase()}`}
         >
           <div className={`poster-wrap ${inWatchlist ? "in-watchlist" : ""}`}>
@@ -159,52 +163,61 @@ export default function PickMovie() {
   }
 
   return (
-    <>
-      <div className="container">
-        <main>
-          <header className="mt-4">
-            {user.first_name && (
-              <h1>
-                {user.first_name} {user.last_name}'s
-              </h1>
-            )}
-            <h4>Add Movie to Watchlist</h4>
-            <div className="genre-flex">{genreButtonsJSX}</div>
-          </header>
+    <div className="container p-0">
+      <header className="m-1">
+        {user.first_name && (
+          <h1 className="display-6 fw-semibold text-center m-2 w-100">
+            {user.first_name} {user.last_name}'s Watchlist
+          </h1>
+        )}
+        <h4 className="fs-3 fw-semibold m-2 w-100 text-center">Add A Movie</h4>
 
-          <article>
-            <section className="current-genre">
-              {currentGenre && (
-                <div className="genre-title">
-                  <h1 className="text-capitalize">{currentGenre}&nbsp;</h1>
-                  <h2>({matchingMovies.length})</h2>
-                </div>
-              )}
+        <nav className="d-flex justify-content-center m-2 w-100">
+          <div className="genre-flex">{genreButtonsJSX}</div>
+        </nav>
+      </header>
 
-              {currentGenre && (
-                <div className="genre-nav-buttons">
-                  <button className="nav-button" onClick={firstGenre}>
-                    ⏮
-                  </button>
-                  <button className="nav-button" onClick={prevGenre}>
-                    ◀
-                  </button>
-                  <button className="nav-button" onClick={nextGenre}>
-                    ▶
-                  </button>
-                  <button className="nav-button" onClick={lastGenre}>
-                    ⏭
-                  </button>
-                </div>
-              )}
-            </section>
+      <main>
+        <article className="m-0">
+          <section className="m-0 current-genre">
             {currentGenre && (
-              <section className="movie-grid mt-2">{movieGridJSX}</section>
+              <div className="m-0 p-0 genre-title">
+                <h1 className="display-6 fw-semibold m-0 text-capitalize">
+                  {currentGenre}&nbsp;
+                  <small className="fs-5 fw-semibold m-0">
+                    ({matchingMovies.length})
+                  </small>
+                </h1>
+              </div>
             )}
-          </article>
-        </main>
-      </div>
-    </>
+
+            {currentGenre && (
+              <div className="mt-2 genre-nav-buttons">
+                <button className="nav-button" onClick={firstGenre}>
+                  ⏮
+                </button>
+                <button className="nav-button" onClick={prevGenre}>
+                  ◀
+                </button>
+                <button className="nav-button" onClick={nextGenre}>
+                  ▶
+                </button>
+                <button className="nav-button" onClick={lastGenre}>
+                  ⏭
+                </button>
+              </div>
+            )}
+          </section>
+          {currentGenre ? (
+            <section className="movie-grid">{movieGridJSX}</section>
+          ) : (
+            <h1 className="fw-semibold w-100 text-center my-4">
+              Select A Genre
+            </h1>
+          )}
+        </article>
+      </main>
+    </div>
   );
 }
 

@@ -1,9 +1,9 @@
 // src/components/media/movieContent/MovieClip.jsx
 
+// import youtube component
 import YouTube from "react-youtube";
 
 export default function MovieClip(props) {
-  // retrieve props
   const { trailerId, movie } = props;
   const opts = {
     height: "100%",

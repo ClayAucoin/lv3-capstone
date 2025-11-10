@@ -1,6 +1,4 @@
-src/components/LoginPage.css * {
-  box-sizing: border-box;
-}
+/* src/components/LoginPage.css  */
 
 .login-container {
   display: flex;

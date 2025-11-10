@@ -1,9 +1,13 @@
 /* eslint-disable react-refresh/only-export-components */
+
 // src/context/AuthContext.jsx
 
+// import react hooks and  components
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "./ModalContext";
+
+// import supabase config
 import supabase from "../utils/supabase";
 
 const AuthContext = createContext();

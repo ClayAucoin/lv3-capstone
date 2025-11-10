@@ -1,10 +1,14 @@
-//* eslint-disable react-hooks/exhaustive-deps */
 // src/components/LoginPage.jsx
 
+// import react hooks and components
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+
+// import modal
 import NoticeModal from "./NoticeModal";
+
+// import css
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./LoginPage.css";
 
@@ -45,17 +49,17 @@ export default function LoginPage() {
 
     // console.log("error: ", error);
 
+    // handle errors
     if (error || !user) {
       showNotice("Login Error", "User not found", "danger");
       return;
     }
-    // check if user is active
     if (!user.is_active) {
       showNotice("Login Error", "Account is inactive", "warning");
       return;
     }
 
-    // redirect user to...
+    // if successful, redirect user to...
     navigate("/view-watchlist");
   }
 
@@ -69,68 +73,66 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-      <div className="container mt-4 login-container">
-        <div className="card">
-          <div className="card-body">
-            <form onSubmit={handleLogin}>
-              <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                  Username
-                  <input
-                    id="username"
-                    type="text"
-                    className="form-control form-control-sm"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    autoFocus
-                  />
-                </label>
-              </div>
-              <div className="">
-                <label htmlFor="password" className="form-label">
-                  Password
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    className="form-control form-control-sm"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className="form-check mb-3">
+    <div className="container mt-4 login-container">
+      <div className="card">
+        <div className="card-body">
+          <form onSubmit={handleLogin}>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Username
                 <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="showPassword"
-                  defaultChecked={showPassword}
-                  onChange={() => setShowPassword((show) => !show)}
+                  id="username"
+                  type="text"
+                  className="form-control form-control-sm"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoFocus
                 />
-                <label className="form-check-label" htmlFor="showPassword">
-                  Show password
-                </label>
-              </div>
-              <button type="submit" className="btn btn-primary for-form">
-                Log in
+              </label>
+            </div>
+            <div className="">
+              <label htmlFor="password" className="form-label">
+                Password
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  className="form-control form-control-sm"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </label>
+            </div>
+            <div className="form-check mb-3">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="showPassword"
+                defaultChecked={showPassword}
+                onChange={() => setShowPassword((show) => !show)}
+              />
+              <label className="form-check-label" htmlFor="showPassword">
+                Show password
+              </label>
+            </div>
+            <button type="submit" className="btn btn-primary for-form">
+              Log in
+            </button>
+            <Link to="/add-user">
+              <button className="btn btn-primary for-form mt-2">
+                Create User
               </button>
-              <Link to="/add-user">
-                <button className="btn btn-primary for-form mt-2">
-                  Create User
-                </button>
-              </Link>
-            </form>
+            </Link>
+          </form>
 
-            <NoticeModal
-              show={modal.show}
-              title={modal.title}
-              message={modal.message}
-              variant={modal.variant}
-              onClose={closeNotice}
-            />
-          </div>
+          <NoticeModal
+            show={modal.show}
+            title={modal.title}
+            message={modal.message}
+            variant={modal.variant}
+            onClose={closeNotice}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 }

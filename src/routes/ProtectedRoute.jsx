@@ -1,5 +1,6 @@
 // src/routes/ProtectedRoute.jsx
 
+// import react hooks and components
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 

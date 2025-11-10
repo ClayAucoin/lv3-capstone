@@ -1,9 +1,5 @@
 /* src/components/media/MovieView.css */
 
-* {
-    box-sizing: border-box;
-}
-
 .btn-primary {
     height: 2.5em;
     background-color: #007bff;

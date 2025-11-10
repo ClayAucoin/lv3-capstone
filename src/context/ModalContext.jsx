@@ -1,7 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 // src/context/ModalContext.jsx
 
+// import react hooks and components
 import { createContext, useContext, useState, useCallback } from "react";
+
+// import modal
 import NoticeModal from "../components/NoticeModal";
 
 const ModalContext = createContext(null);

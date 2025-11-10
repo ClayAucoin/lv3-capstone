@@ -1,11 +1,14 @@
 // src/components/media/ViewWatchlist.jsx
 
-import React from "react";
+// import react hooks and components
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import "./ViewWatchlist.css";
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import css
+import "./ViewWatchlist.css";
 
 export default function ViewWatchlist() {
   const [currentUser, setCurrentUser] = useState("");
@@ -70,7 +73,7 @@ export default function ViewWatchlist() {
     movieGridJSX.push(
       <Link to={`/movie-view/${movie.imdb_id}`}>
         <img
-          key={i}
+          key={movie.imdb_id}
           className="movie-poster"
           src={movie.poster}
           alt={movie.title}
@@ -116,11 +119,11 @@ export default function ViewWatchlist() {
       <div className="container">
         <main>
           <section className="text-center mt-4 mb-3">
-            <h1>
+            <h1 className="display-6 fw-semibold">
               {currentUserName.first_name} {currentUserName.last_name}
             </h1>
             {movieCount === 0 ? (
-              <h3 className="my-4 p-0">
+              <h3 className="display-6 fw-medium my-4 p-0">
                 You Currently Have No
                 <br />
                 Movies In Your Watchlist
@@ -136,13 +139,14 @@ export default function ViewWatchlist() {
               <Link to="/pick-movie">
                 <button
                   className={`btn btn-primary ${
-                    movieCount > 0 ? "add-movie-button" : "btn-lg"
+                    movieCount > 0 ? "add-has-movies" : "add-no-movies"
                   }`}
                 >
                   Add Movie
                 </button>
               </Link>
             </div>
+
             {movieCount > 0 && (
               <article className="movie-grid text-center">
                 {movieGridJSX}

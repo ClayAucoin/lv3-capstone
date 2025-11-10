@@ -1,18 +1,32 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+
 // src/components/ManageUsers.jsx
 
+// import react hooks and  components
 import { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { Link, Navigate } from "react-router-dom";
+
+// import supabase config
 import supabase from "../../utils/supabase";
+
+// import images
 import refreshImg from "../../images/refresh.png";
 import editButton from "../../images/edit.jpg";
 import trashCan from "../../images/trash.png";
+
+// import modal
 import NoticeModal from "../NoticeModal";
+
+// import css
 import "./ManageUsers.css";
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
+  const [nonAdminUsers, setNonAdminUsers] = useState([]);
+  const [adminUsers, setAdminUsers] = useState([]);
+  const [nonAdminUsers2, setNonAdminUsers2] = useState([]);
+  const [adminUsers2, setAdminUsers2] = useState([]);
   const [loading, setLoading] = useState(false);
   const [confirm, setConfirm] = useState({ show: false, user: null });
 
@@ -35,10 +49,43 @@ export default function ManageUsers() {
     }
     setUsers(users || []);
     setLoading(false);
+
+    console.log("users: ", users);
+  }
+
+  async function refreshAdminUsers(isAdmin) {
+    const flag = isAdmin === true || isAdmin === "true";
+    setLoading(true);
+
+    const { data: users, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("is_admin", isAdmin)
+      .order("first_name");
+
+    if (error) {
+      console.error("refreshUsers error: ", error);
+      setLoading(false);
+      return;
+    }
+
+    // console.log("refreshAdminUsers returned: ", users);
+
+    if (flag) {
+      console.log("if: isAdmin");
+      setAdminUsers(users || []);
+    } else {
+      console.log("if: !isAdmin");
+      setNonAdminUsers(users || []);
+    }
+
+    setLoading(false);
   }
 
   useEffect(() => {
     refreshUsers();
+    refreshAdminUsers(true);
+    refreshAdminUsers(false);
   }, []);
 
   // modal confirmations
@@ -66,6 +113,32 @@ export default function ManageUsers() {
     }
     closeConfirm();
   }
+
+  // is admin or not way 2
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("users")
+        .select("id, first_name, is_admin")
+        .order("first_name");
+
+      if (error) {
+        console.error("load users error:", error);
+        setLoading(false);
+        return;
+      }
+
+      const admins = (data || []).filter((u) => u.is_admin === true);
+      const nonAdmins = (data || []).filter((u) => u.is_admin !== true);
+
+      setAdminUsers2(admins);
+      setNonAdminUsers2(nonAdmins);
+      setLoading(false);
+      console.log("setAdminUsers2 returned: ", admins);
+      console.log("setNonAdminUsers2 returned: ", nonAdmins);
+    })();
+  }, []);
 
   return (
     <>
