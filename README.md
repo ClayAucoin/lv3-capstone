@@ -11,10 +11,10 @@ This is a full-stack **React + Supabase** web app for managing a personal movie 
 <table width="100%" border="0">
   <tr>
     <td width="50%">
-      <img src="src/images/1-view-watchlist.png" alt="View Watchlist" width="375">
+      <img src="src/images/1-view-watchlist.png" alt="View Watchlist">
     </td>
     <td width="50%">
-      <img src="src/images/2-pick-movie.png" alt="Pick Movie" width="375">
+      <img src="src/images/2-pick-movie.png" alt="Pick Movie">
     </td>
   </tr>
 </table>
