@@ -18,11 +18,11 @@ export default function ViewWatchlist() {
 
   useEffect(() => {
     if (currentUser === "") {
-      setCurrentUser(localStorage.getItem("userId"));
+      setCurrentUser(localStorage.getItem("id"));
     }
   }, [currentUser]);
 
-  // console.log("userId: ", localStorage.getItem("userId"));
+  // console.log("userId: ", localStorage.getItem("id"));
   // console.log("currentUser: ", currentUser);
 
   async function getUserWatchlist() {
@@ -31,7 +31,7 @@ export default function ViewWatchlist() {
       const { data: watchlist, error: watchlistError } = await supabase
         .from("watchlist")
         .select("imdb_id")
-        .eq("user_id", Number(localStorage.getItem("userId")));
+        .eq("user_id", Number(localStorage.getItem("id")));
 
       if (watchlistError) {
         console.error("getUserWatchlist error:", watchlistError.message);
@@ -102,7 +102,7 @@ export default function ViewWatchlist() {
         const { data: userData, error } = await supabase
           .from("users")
           .select("*")
-          .eq("id", Number(localStorage.getItem("userId")))
+          .eq("id", Number(localStorage.getItem("id")))
           .maybeSingle();
 
         if (error) {

@@ -56,7 +56,7 @@ export default function MovieView() {
 
   async function checkMovieForUser() {
     try {
-      const userId = Number(localStorage.getItem("userId"));
+      const userId = Number(localStorage.getItem("id"));
       // console.log("checkMovieForUser: userId: ", userId, "imdbID: ", imdbId);
 
       const { data, error } = await supabase
@@ -91,7 +91,7 @@ export default function MovieView() {
 
   async function addMovieToWatchlist() {
     try {
-      const userId = Number(localStorage.getItem("userId"));
+      const userId = Number(localStorage.getItem("id"));
       console.log("addMovieToWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
       const newItem = {
@@ -112,7 +112,7 @@ export default function MovieView() {
 
   async function removeFromWatchlist() {
     try {
-      const userId = Number(localStorage.getItem("userId"));
+      const userId = Number(localStorage.getItem("id"));
       console.log("removeFromWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
       const { error } = await supabase

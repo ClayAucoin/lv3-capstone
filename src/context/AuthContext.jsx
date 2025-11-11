@@ -13,16 +13,43 @@ import supabase from "../utils/supabase";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  console.log("AuthContext (b4): id: ", localStorage.getItem("id"));
+  console.log(
+    "AuthContext (b4): first_name: ",
+    localStorage.getItem("first_name")
+  );
+  console.log(
+    "AuthContext (b4): last_name: ",
+    localStorage.getItem("last_name")
+  );
+  console.log("AuthContext (b4): username: ", localStorage.getItem("username"));
+  console.log(
+    "AuthContext (b4): is_active: ",
+    localStorage.getItem("is_active")
+  );
+  console.log("AuthContext (b4): is_admin: ", localStorage.getItem("is_admin"));
+
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { showModal } = useModal();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const storedUserId = localStorage.getItem("id");
+    const storedFirstName = localStorage.getItem("first_name");
+    const storedLastName = localStorage.getItem("last_name");
     const storedUser = localStorage.getItem("username");
-    const storedUserId = localStorage.getItem("userId");
+    const storedIsActive = localStorage.getItem("is_active");
+    const storedIsAdmin = localStorage.getItem("is_admin");
     if (storedUser && storedUserId) {
-      setUser({ id: storedUserId, username: storedUser });
+      setUser({
+        id: storedUserId,
+        first_name: storedFirstName,
+        last_name: storedLastName,
+        username: storedUser,
+        is_active: storedIsActive,
+        is_admin: storedIsAdmin,
+      });
     }
     setIsLoading(false);
   }, []);
@@ -31,9 +58,7 @@ export function AuthProvider({ children }) {
     try {
       const { data: userData, error } = await supabase
         .from("users")
-        .select(
-          "id, first_name, last_name, username, email, is_active, is_admin"
-        )
+        .select("id, first_name, last_name, username, is_active, is_admin")
         .eq("username", username.trim())
         .eq("password", password.trim())
         .maybeSingle();
@@ -46,8 +71,11 @@ export function AuthProvider({ children }) {
       // console.log("AuthContext: login: ", userData);
 
       if (userData) {
-        localStorage.setItem("userId", String(userData.id));
+        localStorage.setItem("id", String(userData.id));
+        localStorage.setItem("first_name", userData.first_name);
+        localStorage.setItem("last_name", userData.last_name);
         localStorage.setItem("username", userData.username);
+        localStorage.setItem("is_active", userData.is_active);
         localStorage.setItem("is_admin", userData.is_admin);
         setUser(userData, error);
 
@@ -61,9 +89,34 @@ export function AuthProvider({ children }) {
     }
   }
 
+  console.log("AuthContext (after): id: ", localStorage.getItem("id"));
+  console.log(
+    "AuthContext (after): first_name: ",
+    localStorage.getItem("first_name")
+  );
+  console.log(
+    "AuthContext (after): last_name: ",
+    localStorage.getItem("last_name")
+  );
+  console.log(
+    "AuthContext (after): username: ",
+    localStorage.getItem("username")
+  );
+  console.log(
+    "AuthContext (after): is_active: ",
+    localStorage.getItem("is_active")
+  );
+  console.log(
+    "AuthContext (after): is_admin: ",
+    localStorage.getItem("is_admin")
+  );
+
   function logout() {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("id");
+    localStorage.removeItem("first_name");
+    localStorage.removeItem("last_name");
     localStorage.removeItem("username");
+    localStorage.removeItem("is_active");
     localStorage.removeItem("is_admin");
     setUser(null);
     navigate("/login");

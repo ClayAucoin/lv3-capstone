@@ -56,7 +56,7 @@ export default function LoginPage() {
     }
     if (!user.is_active) {
       showNotice("Login Error", "Account is inactive", "warning");
-      localStorage.removeItem("userId");
+      localStorage.removeItem("id");
       localStorage.removeItem("username");
       localStorage.removeItem("is_admin");
       setUser(null);

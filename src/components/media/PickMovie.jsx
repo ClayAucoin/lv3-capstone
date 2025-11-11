@@ -89,7 +89,7 @@ export default function PickMovie() {
         const { data: watchlist, error } = await supabase
           .from("watchlist")
           .select("imdb_id")
-          .eq("user_id", Number(localStorage.getItem("userId")));
+          .eq("user_id", Number(localStorage.getItem("id")));
 
         if (error) {
           console.error("getUserWatchlist error:", error.message);

@@ -195,11 +195,13 @@ npm run dev
 ## Usage
 
 - Log in or register a new user.
+  - Default admin:
+    - username: **admin**
+    - password: **password**
 - Browse movies by genre or open individual movie pages.
 - Click **Add to Watchlist** to save a movie or **Remove from Watchlist** to delete it.
 - Admin users can access the **Manage Users** page to edit, add, or delete users.
 - Visit the **Analytics** page to view charts showing movies by genre and rating.
-- Default username: **admin**, password: **admin**
 
 ---
 
@@ -267,16 +269,16 @@ Configures Supabase client connection using your environment variables.
 
 ## Future Improvements
 
-- Add real-time updates for watchlist changes.
+- Administrators can view other users' watchlist.
 - Improve UI with filtering and sorting options.
-- Migrate to full Supabase Auth
-- Add movie ratings and comments
-- Show watchlist and genre stats per user
-- Public vs. private watchlists
-- Hover effects for poster overlays
-- Recommendation engine by genre
+- Hover effects for poster overlays.
 - Add search functionality and genre filtering.
+- Show watchlist and genre stats per user.
 - Include analytics filtering by date range.
+- Public vs. private watchlists.
+- Each user can have multiple lists.
+- Migrate to full Supabase Auth.
+- Add movie ratings and comments.
 
 ---
 
