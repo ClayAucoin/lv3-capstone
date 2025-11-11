@@ -17,7 +17,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { login } = useAuth();
+  const { user, setUser, login, requestLogout } = useAuth();
   const navigate = useNavigate();
 
   const [modal, setModal] = useState({
@@ -56,6 +56,10 @@ export default function LoginPage() {
     }
     if (!user.is_active) {
       showNotice("Login Error", "Account is inactive", "warning");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("username");
+      localStorage.removeItem("is_admin");
+      setUser(null);
       return;
     }
 

@@ -1,8 +1,34 @@
-# 🎬 Movie Catalog App
+# Movie Catalog App
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white) ![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white) ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)
 
-This is a full-stack **React + Supabase** web app for managing a personal movie catalog and watchlist. Users can browse movies by genre, view detailed info and trailers, manage a watchlists, and handle user accounts with integrated login and admin tools.
+## Table of Contents
+
+- [Overview](#overview)
+- [Purpose](#purpose)
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Database Schema](#database-schema)
+- [Setup Instructions](#setup-instructions)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Key Components](#key-components)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
+- [License](#license)
+
+---
+
+## Overview
+
+This is a full-stack **React + Supabase** web app that allows users to browse a catalog of movies, view detailed info and trailers, manage a personal watchlist, view analytics on genres and ratings and handle user accounts with integrated login and admin tools. It features a responsive layout, authentication system, user management, and chart-based insights.
+
+---
+
+## Purpose
+
+The app was designed as a Capstone project to demonstrate the integration of React and Supabase for real-time CRUD operations, user authentication, and data visualization.
 
 ---
 
@@ -37,125 +63,117 @@ This is a full-stack **React + Supabase** web app for managing a personal movie 
 
 ---
 
-https://lv3-capstone.vercel.app
+## Features
 
----
-
-## Home Page Movie View Manage Users
-
-![Home                                                      ![Movie                                                      ![Manage
-Page](https://via.placeholder.com/300x180?text=Home+Page)   View](https://via.placeholder.com/300x180?text=Movie+View)   Users](https://via.placeholder.com/300x180?text=Manage+Users)
-
----
-
-## 🧩 Tech Stack
-
-- ⚛️ **React (Vite)** -- fast front-end framework
-- 🧠 **React Router** -- page routing and navigation
-- 🧾 **Supabase** -- backend-as-a-service for database and auth
-- 🎨 **Bootstrap 5** -- UI layout and components
-- 🎥 **YouTube Embed API** -- responsive trailers
-- 🗃️ **PostgreSQL** -- data persistence and relations
-
----
-
-## 🚀 Features
-
-### 🎞 Movie Library
+### Movie Library
 
 - Displays all movies in a responsive grid by genre.
 - Each movie has a detailed view page with poster, trailer,
   description, and cast info.
 - Layout automatically adapts between desktop and mobile.
 
-### 👤 User Authentication
+### User Authentication
 
-- Custom login/logout system using Supabase or localStorage.
+- Custom login/logout system using Supabase and localStorage.
 - Authenticated sessions persist across refreshes.
 - Displays logged-in user in Navbar.
+- Role-based access (Admin and Non-admin users)
+- Manage user accounts (Admin only)
 
-### 🎬 Watchlist Management
+### Watchlist Management
 
 - Personalized watchlist for each user.
 - Add/remove movies directly from the movie detail page.
 - Highlights movies already on the user's watchlist.
 
-### 🧰 Admin Features
+### Admin Features
 
 - Manage users: add, edit, delete, and activate/deactivate accounts.
 - Confirmation modals for sensitive actions.
 - Filter and refresh functionality for user list.
 
-### 🖥️ Responsive Layout
+### Responsive Layout
 
 - Poster resizes dynamically with the viewport.
 - Trailer uses a responsive YouTube embed.
-- Stacks poster → trailer → description → details on small screens.
+- Stacks poster > trailer > description > details on small screens.
+
+### Analytics
+
+- Analytics page with:
+  - Bar chart: Movies per Genre
+  - Pie chart: Movies per Rating
 
 ---
 
-## 🧱 Database Schema
+## Tech Stack
 
-### **users**
-
-Column Type Description
-
----
-
-id integer (PK) Auto-increment ID
-username text Unique username
-password text Password (demo only)
-first_name text User's first name
-last_name text User's last name
-email text Email address
-is_active boolean Indicates active status
-admin boolean Marks admin users (optional)
-
-### **movies**
-
-Column Type Description
+- **React (Vite)** -- fast front-end framework
+- **React Router** -- page routing and navigation
+- **Supabase** -- backend-as-a-service for database and auth
+- **Bootstrap 5** -- UI layout and components
+- **YouTube Embed API** -- responsive trailers
+- **PostgreSQL** -- data persistence and relations
 
 ---
 
-imdb_id text (PK) IMDb identifier
-title text Movie title
-year integer Release year
-poster text Poster image URL
-genres text Comma-separated genre list
-runtime text Runtime (e.g. 2h 58m)
-rating text Rating (e.g. PG-13)
-description text Movie synopsis
-yt_trailer_id text YouTube trailer ID
-budget numeric Production budget
-worldwide_gross numeric Total revenue
+## Database Schema
 
-### **watchlist**
+### `movies` Table
 
-Column Type Description
+| Column                      | Type    | Description                |
+| --------------------------- | ------- | -------------------------- |
+| id                          | bigint  | Primary key                |
+| imdb_id                     | text    | Unique IMDB identifier     |
+| title                       | text    | Movie title                |
+| year                        | integer | Release year               |
+| genres                      | text    | Comma-separated genre list |
+| poster                      | text    | Poster image URL           |
+| yt_trailer_id               | text    | YouTube trailer ID         |
+| runtime                     | text    | Duration (e.g., 2:10:35)   |
+| rating                      | text    | MPAA rating                |
+| description                 | text    | Movie summary              |
+| producers, directors, stars | text    | Credits                    |
+| budget, worldwide_gross     | numeric | Financial data             |
+
+### `users` Table
+
+| Column                | Type    | Description        |
+| --------------------- | ------- | ------------------ |
+| id                    | bigint  | Primary key        |
+| first_name, last_name | text    | User’s name        |
+| username              | text    | Login name         |
+| password              | text    | Hashed password    |
+| email                 | text    | Contact email      |
+| is_active             | boolean | Active status      |
+| is_admin              | boolean | Admin privileges   |
+| user_id               | uuid    | FK to `auth.users` |
+
+### `watchlist` Table
+
+| Column  | Type   | Description            |
+| ------- | ------ | ---------------------- |
+| user_id | bigint | FK to `users`          |
+| imdb_id | text   | FK to `movies.imdb_id` |
 
 ---
 
-user_id integer Foreign key → users.id
-imdb_id text Foreign key → movies.imdb_id
+## Setup Instructions
 
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone the repository
+### 1️ Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/movie-catalog-app.git
-cd movie-catalog-app
+git clone https://github.com/ClayAucoin/lv3-capstone
+cd lv3-capstone
 ```
 
-### 2️⃣ Install dependencies
+### 2️ Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3️⃣ Configure environment variables
+### 3️ Configure environment variables
 
 Create a `.env` file in the project root:
 
@@ -164,90 +182,112 @@ VITE_SUPABASE_URL=your-supabase-url
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
-### 4️⃣ Run locally
+### 4️ Run locally
 
 ```bash
 npm run dev
 ```
 
-Visit **http://localhost:5173**
+### 5. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-## 📂 Folder Structure
+## Usage
+
+- Log in or register a new user.
+- Browse movies by genre or open individual movie pages.
+- Click **Add to Watchlist** to save a movie or **Remove from Watchlist** to delete it.
+- Admin users can access the **Manage Users** page to edit, add, or delete users.
+- Visit the **Analytics** page to view charts showing movies by genre and rating.
+- Default username: **admin**, password: **admin**
+
+---
+
+## Folder Structure
 
     src/
     ├── components/
-    │   ├── auth/
-    │   │   ├── LoginPage.jsx
-    │   │   ├── ManageUsers.jsx
+    │   ├── media/
+    │   │   ├── movieContent/
+    │   │   │   ├── MovieClip.jsx
+    │   │   │   ├── MovieDescription.jsx
+    │   │   │   ├── MoviePoster.jsx
+    │   │   │   ├── MovieStats.jsx
+    │   │   │   └── MovieTrailer.jsx
+    │   │   ├── Analytics.jsx
+    │   │   ├── MovieView.jsx
+    │   │   ├── PickMovie.jsx
+    │   │   └── ViewWatchlist.jsx
+    │   ├── user/
     │   │   ├── AddUser.jsx
     │   │   ├── EditUser.jsx
-    │   │   └── NoticeModal.jsx
-    │   ├── media/
-    │   │   ├── HomePage.jsx
-    │   │   ├── MovieView.jsx
-    │   │   ├── MovieClip.jsx
-    │   │   └── ViewWatchlist.jsx
-    │   └── Navbar.jsx
+    │   │   ├── ManageUsers.jsx
+    │   │   └── UserForm.jsx
+    │   ├── LoginPage.jsx
+    │   ├── Navbar.jsx
+    │   └── NoticeModal.jsx
     ├── context/
-    │   └── AuthContext.jsx
+    │   ├── AuthContext.jsx
+    │   └── ModalContext.jsx
+    ├── routes/
+    │   └── ProtectedRoute.jsx
     ├── utils/
     │   └── supabase.js
-    ├── data/
-    │   └── enriched-collection.json
     └── App.jsx
 
 ---
 
-## 🧩 Key Components
+## Key Components
 
-### 🔐 AuthContext.jsx
+### AuthContext.jsx
 
 Provides app-wide authentication context. Manages login, logout, and
 session state with localStorage and Supabase.
 
-### 🧾 ManageUsers.jsx
+### ManageUsers.jsx
 
 Displays and manages user records from Supabase. Includes refresh, edit,
 delete, and confirmation modals.
 
-### 🎬 MovieView.jsx
+### MovieView.jsx
 
 Responsive movie detail page with poster, trailer, description, and
 metadata.
 
-### 🎥 MovieClip.jsx
+### MovieClip.jsx
 
 Responsive YouTube trailer embed using `react-youtube` and CSS aspect
 ratio for scaling.
 
-### 💾 supabase.js
+### supabase.js
 
 Configures Supabase client connection using your environment variables.
 
 ---
 
-## 💡 Stretch Goals
+## Future Improvements
 
-- 🔐 Migrate to full Supabase Auth
-- ⭐ Add movie ratings and comments
-- 📈 Show watchlist and genre stats per user
-- 🧩 Public vs. private watchlists
-- 🎭 Hover effects for poster overlays
-- 🧠 Recommendation engine by genre
-- 📱 PWA support for offline browsing
+- Add real-time updates for watchlist changes.
+- Improve UI with filtering and sorting options.
+- Migrate to full Supabase Auth
+- Add movie ratings and comments
+- Show watchlist and genre stats per user
+- Public vs. private watchlists
+- Hover effects for poster overlays
+- Recommendation engine by genre
+- Add search functionality and genre filtering.
+- Include analytics filtering by date range.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Clay Aucoin**\
 Developer • Systems Enthusiast • Movie Data Wrangler\
-Built with ❤️ using React, Supabase, and Bootstrap.
+Built with React, Supabase, and Bootstrap.
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the [MIT License](LICENSE).

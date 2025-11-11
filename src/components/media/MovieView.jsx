@@ -12,8 +12,8 @@ import { useAuth } from "../../context/AuthContext";
 import supabase from "../../utils/supabase";
 
 // import local components
-import Poster from "./movieContent/Poster";
-import Trailer from "./movieContent/Trailer";
+import MoviePoster from "./movieContent/MoviePoster";
+import MovieTrailer from "./movieContent/MovieTrailer";
 import MovieDescription from "./movieContent/MovieDescription";
 import MovieStats from "./movieContent/MovieStats";
 
@@ -188,13 +188,13 @@ export default function MovieView() {
         <article className="row g-3 align-items-stretch">
           {/* section: trailer */}
           <section className="col-12 col-lg-8 order-1 order-lg-2">
-            <Trailer data={selectedMovie} />
+            <MovieTrailer data={selectedMovie} />
           </section>
 
           {/* section: poster: xs: next to desc; lg: next to trailer */}
           <section className="col-5 col-sm-4 col-lg-4 order-2 order-lg-1">
             <div className="h-100">
-              <Poster data={selectedMovie} />
+              <MoviePoster data={selectedMovie} />
             </div>
           </section>
 

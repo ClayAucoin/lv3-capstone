@@ -1,6 +1,6 @@
-// src/components/media/movieContent/Poster.jsx
+// src/components/media/movieContent/MoviePoster.jsx
 
-export default function Poster({ data }) {
+export default function MoviePoster({ data }) {
   return (
     <img
       src={data.poster}

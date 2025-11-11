@@ -1,9 +1,9 @@
-// src/components/media/movieContent/Trailer.jsx
+// src/components/media/movieContent/MovieTrailer.jsx
 
 // import components
 import MovieClip from "./MovieClip";
 
-export default function Trailer({ data }) {
+export default function MovieTrailer({ data }) {
   return (
     <>
       {/* trailer: xs–md: above everything; lg: hidden */}
