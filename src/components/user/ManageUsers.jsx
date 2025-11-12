@@ -59,44 +59,8 @@ export default function ManageUsers() {
     }
   }
 
-  async function refreshAdminUsers(isAdmin) {
-    try {
-      const flag = isAdmin === true || isAdmin === "true";
-      setLoading(true);
-
-      const { data: users, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("is_admin", isAdmin)
-        .order("first_name");
-
-      if (error) {
-        console.error("refreshUsers error: ", error);
-        return;
-      }
-
-      // console.log("refreshAdminUsers returned: ", users);
-
-      if (flag) {
-        // console.log("if: isAdmin");
-        setAdminUsers(users || []);
-      } else {
-        // console.log("if: !isAdmin");
-        setNonAdminUsers(users || []);
-      }
-
-      setLoading(false);
-    } catch (err) {
-      console.log("refreshAdminUsers: unexpected error: ", err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
     refreshUsers();
-    refreshAdminUsers(true);
-    refreshAdminUsers(false);
   }, []);
 
   // modal confirmations
@@ -131,32 +95,6 @@ export default function ManageUsers() {
       console.log("confirmDelete: unexpected error: ", err);
     }
   }
-
-  // for accordion: is admin or not way 2
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("users")
-        .select("id, first_name, is_admin")
-        .order("first_name");
-
-      if (error) {
-        console.error("load users error:", error);
-        setLoading(false);
-        return;
-      }
-
-      const admins = (data || []).filter((u) => u.is_admin === true);
-      const nonAdmins = (data || []).filter((u) => u.is_admin !== true);
-
-      setAdminUsers2(admins);
-      setNonAdminUsers2(nonAdmins);
-      setLoading(false);
-      // console.log("setAdminUsers2 returned: ", admins);
-      // console.log("setNonAdminUsers2 returned: ", nonAdmins);
-    })();
-  }, []);
 
   return (
     <>

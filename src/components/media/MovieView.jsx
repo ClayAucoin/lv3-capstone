@@ -29,12 +29,14 @@ export default function MovieView() {
   const [selectedMovie, setSelectedMovie] = useState([]);
   const [movieInWatchlist, setMovieInWatchlist] = useState(false);
 
+  // check if currentGenre state exists or if genre is coming in via params
   useEffect(() => {
     if (genre && genre !== currentGenre) {
       setCurrentGenre(genre);
     }
   }, [genre]);
 
+  // get movie data
   async function loadSelectedMovie() {
     try {
       // console.log("loadSelectedMovie: imdbID: ", imdbId);
@@ -54,6 +56,7 @@ export default function MovieView() {
     }
   }
 
+  // get user movies
   async function checkMovieForUser() {
     try {
       const userId = Number(localStorage.getItem("id"));
@@ -89,10 +92,11 @@ export default function MovieView() {
     return <p>No movie selected</p>;
   }
 
+  // add current movie to watchlist
   async function addMovieToWatchlist() {
     try {
       const userId = Number(localStorage.getItem("id"));
-      console.log("addMovieToWatchlist: userId: ", userId, "imdbID: ", imdbId);
+      // console.log("addMovieToWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
       const newItem = {
         user_id: userId,
@@ -110,10 +114,11 @@ export default function MovieView() {
     }
   }
 
+  // remove current movie from watchlist
   async function removeFromWatchlist() {
     try {
       const userId = Number(localStorage.getItem("id"));
-      console.log("removeFromWatchlist: userId: ", userId, "imdbID: ", imdbId);
+      // console.log("removeFromWatchlist: userId: ", userId, "imdbID: ", imdbId);
 
       const { error } = await supabase
         .from("watchlist")
@@ -131,6 +136,7 @@ export default function MovieView() {
     }
   }
 
+  // helper: format year from data for title
   function formatTitle() {
     return Number(selectedMovie?.year);
   }
@@ -172,11 +178,20 @@ export default function MovieView() {
                 {selectedMovie.title}
                 <h3 className="fs-5 fw-semibold text-muted">
                   <small className="">
-                    {Math.trunc(formatTitle(selectedMovie.year))}
-                    <span className="mx-1">•</span>
-                    {selectedMovie.rating}
-                    <span className="mx-1">•</span>
-                    {formatTime(selectedMovie.runtime)}
+                    {selectedMovie.year &&
+                      Math.trunc(formatTitle(selectedMovie.year))}
+                    {selectedMovie.rating && (
+                      <>
+                        <span className="mx-1">•</span>
+                        {selectedMovie.rating}
+                      </>
+                    )}
+                    {selectedMovie.runtime && (
+                      <>
+                        <span className="mx-1">•</span>
+                        {formatTime(selectedMovie.runtime)}
+                      </>
+                    )}
                   </small>
                 </h3>
               </h1>
@@ -213,11 +228,13 @@ export default function MovieView() {
   );
 }
 
+// helper: format genre case
 function formatGenre(genreString) {
   if (!genreString) return "";
   return genreString.charAt(0).toUpperCase() + genreString.slice(1);
 }
 
+// helper: format movie duration from 01:45:42 to 1h 45m
 function formatTime(timeStr) {
   const parts = timeStr.split(":").map(Number);
 

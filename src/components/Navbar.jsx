@@ -9,6 +9,8 @@ import "./Navbar.css";
 
 export default function Navbar() {
   const { user, isLoading, requestLogout } = useAuth();
+
+  // get path and form
   const location = useLocation();
   const basePath = location.pathname
     .replace(/^((?:\/[^/]+){1}).*$/, "$1")

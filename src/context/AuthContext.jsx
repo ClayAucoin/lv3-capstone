@@ -18,6 +18,7 @@ export function AuthProvider({ children }) {
   const { showModal } = useModal();
   const navigate = useNavigate();
 
+  // check for user data in localstorage on load
   useEffect(() => {
     const storedUserId = localStorage.getItem("id");
     const storedFirstName = localStorage.getItem("first_name");
@@ -38,8 +39,10 @@ export function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
+  // login user
   async function login(username, password) {
     try {
+      // check if user exists in users table
       const { data: userData, error } = await supabase
         .from("users")
         .select("id, first_name, last_name, username, is_active, is_admin")
@@ -54,6 +57,7 @@ export function AuthProvider({ children }) {
 
       // console.log("AuthContext: login: ", userData);
 
+      // populate localstorage if user exist
       if (userData) {
         localStorage.setItem("id", String(userData.id));
         localStorage.setItem("first_name", userData.first_name);
@@ -73,6 +77,19 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // popup modal verifying if user wants to logout
+  async function requestLogout() {
+    const ok = await showModal({
+      title: "Log out?",
+      message: "Are you sure you want to log out?",
+      variant: "warning",
+      confirmText: "Log out",
+      cancelText: "Cancel",
+    });
+    if (ok) logout();
+  }
+
+  // logout user
   function logout() {
     localStorage.removeItem("id");
     localStorage.removeItem("first_name");
@@ -84,24 +101,12 @@ export function AuthProvider({ children }) {
     navigate("/login");
   }
 
-  async function requestLogout() {
-    // console.log("[Auth] requestLogout: opening modal");
-    const ok = await showModal({
-      title: "Log out?",
-      message: "Are you sure you want to log out?",
-      variant: "warning",
-      confirmText: "Log out",
-      cancelText: "Cancel",
-    });
-    // console.log("[Auth] requestLogout: result =", ok);
-    if (ok) logout();
-  }
-
   // temporary "loading" message
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
+  // useAuth states
   const value = { user, setUser, logout, login, requestLogout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

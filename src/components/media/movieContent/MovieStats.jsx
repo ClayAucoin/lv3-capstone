@@ -3,24 +3,41 @@
 export default function MovieStats({ data }) {
   return (
     <ul className="list-unstyled lh-lg mb-0 small">
-      <li>
-        <b>Producers:</b> {data.producers}
-      </li>
-      <li>
-        <b>Directors:</b> {data.directors}
-      </li>
-      <li>
-        <b>Stars:</b> {data.stars}
-      </li>
-      <li>
-        <b>Released:</b> {formatDate(data.released)}
-      </li>
-      <li>
-        <b>Runtime:</b> {data.runtime}
-      </li>
-      <li>
-        <b>Rating:</b> {data.rating}
-      </li>
+      {data.producers && (
+        <li>
+          <b>Producers:</b> {data.producers}
+        </li>
+      )}
+      {data.directors && (
+        <li>
+          <b>Directors:</b> {data.directors}
+        </li>
+      )}
+      {data.stars && (
+        <li>
+          <b>Stars:</b> {data.stars}
+        </li>
+      )}
+      {data.collection && (
+        <li>
+          <b>Collection:</b> {data.collection}
+        </li>
+      )}
+      {data.release_date && (
+        <li>
+          <b>Released:</b> {formatDate(data.release_date)}
+        </li>
+      )}
+      {data.runtime && (
+        <li>
+          <b>Runtime:</b> {data.runtime}
+        </li>
+      )}
+      {data.rating && (
+        <li>
+          <b>Rating:</b> {data.rating}
+        </li>
+      )}
       <li>
         <b>Genre(s):</b> {formatGenres(data.genres)}
       </li>
@@ -38,6 +55,7 @@ export default function MovieStats({ data }) {
   );
 }
 
+// helper: convert number from dB to currency
 function convertToCurrency(amount) {
   const usdFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -49,6 +67,7 @@ function convertToCurrency(amount) {
   return usdFormatted;
 }
 
+// helper: format all words in genre to proper case
 function formatGenres(genreString) {
   if (!genreString) return "";
   return genreString
@@ -58,6 +77,7 @@ function formatGenres(genreString) {
     .join(", ");
 }
 
+// helper: formats date to Jan 1, 2000
 function formatDate(dateStr) {
   if (!dateStr) return "";
 

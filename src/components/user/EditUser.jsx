@@ -15,12 +15,13 @@ export default function EditUser() {
   const navigate = useNavigate();
   const [initial, setInitial] = useState(null);
 
+  // get current user's info from dB and populate form
   useEffect(() => {
     (async () => {
       const { data, error } = await supabase
         .from("users")
         .select("*")
-        .eq("id", Number(id)) // use Number if numeric id
+        .eq("id", Number(id))
         .maybeSingle();
 
       if (error) {
@@ -35,13 +36,14 @@ export default function EditUser() {
           last_name: data.last_name,
           username: data.username,
           email: data.email,
-          password: "", // don’t prefill
+          password: "",
           confirmPassword: "",
         });
       }
     })();
   }, [id]);
 
+  // update user info
   async function handleUpdate(payload) {
     try {
       // omit password if blank

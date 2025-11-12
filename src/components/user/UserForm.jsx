@@ -22,7 +22,7 @@ export default function UserForm({
     email: "",
     password: "",
     confirmPassword: "",
-    ...initialValues, // edit mode will prefill these
+    ...initialValues, // prefilled by edit mode
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -34,17 +34,19 @@ export default function UserForm({
   });
 
   const { user } = useAuth();
-  // if (!user) return <Navigate to="/login" replace />;
 
+  // get pathname and format
   const location = useLocation();
   const basePath = location.pathname
     .replace(/^((?:\/[^/]+){1}).*$/, "$1")
     .replace(/\/$/, "");
 
-  console.log("user: ", user);
-  console.log("basePath: ", basePath);
+  // console.log("user: ", user);
+  // console.log("basePath: ", basePath);
 
   useEffect(() => {
+    // populates all existing data (prev) form fields and
+    // overwrites with new/changed values (initialValues)
     setForm((prev) => ({ ...prev, ...initialValues }));
   }, [initialValues]);
 
@@ -52,10 +54,12 @@ export default function UserForm({
     setModal({ show: true, title, message, variant });
   }
 
-  function updateField(name, value) {
-    setForm((f) => ({ ...f, [name]: value }));
+  // update field name with new value
+  function updateField(fieldName, value) {
+    setForm((f) => ({ ...f, [fieldName]: value }));
   }
 
+  // form validation
   async function handleSubmit(e) {
     e.preventDefault();
     // Basic validation
@@ -89,12 +93,14 @@ export default function UserForm({
 
     // build payload, omit password in EDIT if left blank
     const payload = {
+      // make sure they are bool
       is_active: !!form.is_active,
       is_admin: !!form.is_admin,
       first_name: form.first_name.trim(),
       last_name: form.last_name.trim(),
       username: form.username.trim(),
       email: form.email.trim(),
+      // don't modify password if user didn't change it
       ...(form.password ? { password: form.password } : {}),
     };
 

@@ -11,10 +11,8 @@ import supabase from "../../utils/supabase";
 import UserForm from "./UserForm";
 
 export default function AddUser() {
-  // setup redirect
   const navigate = useNavigate();
 
-  // setup sate variables
   const [isTesting, setIsTesting] = useState("");
   const [defaultValues, setDefaultValues] = useState({
     is_active: true,
@@ -45,6 +43,7 @@ export default function AddUser() {
     }
   }, [isTesting]);
 
+  // insert new user into dB
   async function handleAddUser(payload) {
     try {
       const { error } = await supabase.from("users").insert(payload);

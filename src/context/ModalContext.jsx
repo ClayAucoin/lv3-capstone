@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+
 // src/context/ModalContext.jsx
 
 // import react hooks and components

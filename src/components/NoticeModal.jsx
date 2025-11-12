@@ -1,6 +1,6 @@
 // src/components/NoticeModal.jsx
 
-// import react hooks and components
+// import react-bootstrap hooks and components
 import { Modal, Button, Alert } from "react-bootstrap";
 
 // import css

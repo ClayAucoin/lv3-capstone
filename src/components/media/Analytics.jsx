@@ -1,4 +1,4 @@
-// src/components/media/Analytics.jsx
+// src/components/analytics/Analytics.jsx
 
 // import react hooks and components
 import { useEffect, useState } from "react";
@@ -51,9 +51,9 @@ export default function Analytics() {
           return;
         }
 
-        console.log("movies rows:", data?.length ?? 0);
+        // console.log("movies rows:", data?.length ?? 0);
 
-        // bar chart, by genres
+        // get bar chart data: by genres
         const genreCounts = (data ?? []).reduce((acc, row) => {
           const genres = (row.genres || "")
             .split(",")
@@ -84,7 +84,7 @@ export default function Analytics() {
           ],
         });
 
-        // pie chart, by ratings
+        // get pie chart data: by ratings
         const ratingCounts = (data ?? []).reduce((acc, m) => {
           const r = (m.rating || "Unrated").trim();
           acc[r] = (acc[r] || 0) + 1;
@@ -125,31 +125,68 @@ export default function Analytics() {
     })();
   }, []);
 
+  // bar chart styling
   const barChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      title: { display: true, text: "Movies per Genre" },
-      legend: { position: "bottom" },
+      title: {
+        display: true,
+        text: "Movies per Genre",
+        color: "#1f2937",
+        align: "center",
+        padding: { top: 8, bottom: 16 },
+        font: {
+          size: 24,
+          weight: "700",
+          family: "'Inter'",
+        },
+      },
+      legend: {
+        display: false,
+        position: "bottom",
+        labels: {
+          color: "#374151",
+          font: { size: 12 },
+        },
+      },
     },
     scales: {
-      x: { grid: { display: false } },
-      y: { beginAtZero: true, ticks: { precision: 0 } },
+      x: { grid: { display: false }, ticks: { color: "#4b5563" } },
+      y: { beginAtZero: true, ticks: { precision: 0, color: "#4b5563" } },
     },
   };
 
+  // pie chart styling
   const pieOptions = {
     responsive: true,
     plugins: {
-      legend: { position: "right" },
-      title: { display: true, text: "Movies by Rating" },
+      title: {
+        display: true,
+        text: "Movies by Rating",
+        color: "#1f2937",
+        align: "center",
+        padding: { top: 8, bottom: 16 },
+        font: {
+          size: 24,
+          weight: "700",
+          family: "'Inter'",
+        },
+      },
+      legend: {
+        position: "right",
+        labels: {
+          color: "#374151",
+          font: { size: 12 },
+        },
+      },
     },
   };
 
   if (loading) return <p>Loading charts…</p>;
 
   return (
-    <div className="analytics-container">
+    <div className="analytics-container mt-4">
       <div
         style={{ width: "90%", maxWidth: 900, margin: "0 auto", height: 420 }}
       >

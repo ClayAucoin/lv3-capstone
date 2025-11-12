@@ -19,6 +19,7 @@ export default function PickMovie() {
 
   const [watchlistIds, setWatchlistIds] = useState([]);
 
+  // check if currentGenre state exists or if genre is coming in via params
   useEffect(() => {
     if (!currentGenre && !genre) {
       setCurrentGenre("");
@@ -30,6 +31,7 @@ export default function PickMovie() {
   // console.log("currentGenre: ", currentGenre);
   // console.log("genre: ", genre);
 
+  // load movies from dB
   async function loadMovies() {
     try {
       const { data, error } = await supabase
@@ -148,25 +150,21 @@ export default function PickMovie() {
   function firstGenre() {
     if (allGenres.length) setCurrentGenre(allGenres[0]);
   }
-
   function lastGenre() {
     if (allGenres.length) setCurrentGenre(allGenres[allGenres.length - 1]);
   }
-
   function nextGenre() {
     if (!allGenres.length) return;
     const i = allGenres.indexOf(currentGenre);
     const next = i === -1 ? 0 : Math.min(i + 1, allGenres.length - 1);
     setCurrentGenre(allGenres[next]);
   }
-
   function prevGenre() {
     if (!allGenres.length) return;
     const i = allGenres.indexOf(currentGenre);
     const prev = i === -1 ? 0 : Math.max(i - 1, 0);
     setCurrentGenre(allGenres[prev]);
   }
-
   function currentGenreClick(genre) {
     setCurrentGenre(genre);
   }

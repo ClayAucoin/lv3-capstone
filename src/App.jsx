@@ -7,29 +7,29 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 // import context providers
-import { ModalProvider } from "./context/ModalContext";
-import { AuthProvider } from "./context/AuthContext";
+import { ModalProvider } from "./context/ModalContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 // import navbar
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar.jsx";
 
 // import login
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/LoginPage.jsx";
 
 // auth
 import AuthLogin from "./components/auth/AuthLogin.jsx";
 import AuthAddUser from "./components/auth/AuthAddUser.jsx";
 
 // import user module pages
-import ManageUsers from "./components/user/ManageUsers";
-import EditUser from "./components/user/EditUser";
-import AddUser from "./components/user/AddUser";
+import ManageUsers from "./components/user/ManageUsers.jsx";
+import EditUser from "./components/user/EditUser.jsx";
+import AddUser from "./components/user/AddUser.jsx";
 
 // import media pages
-import PickGenre from "./components/media/PickMovie";
-import MovieView from "./components/media/MovieView";
-import ViewWatchlist from "./components/media/ViewWatchlist";
-import Analytics from "./components/media/Analytics";
+import PickGenre from "./components/media/PickMovie.jsx";
+import MovieView from "./components/media/MovieView.jsx";
+import ViewWatchlist from "./components/media/ViewWatchlist.jsx";
+import Analytics from "./components/media/Analytics.jsx";
 
 // import css
 import "./App.css";
@@ -51,7 +51,7 @@ export default function App() {
                     />
                     <Route path="/login" element={<LoginPage />} />
 
-                    {/* auth login routes */}
+                    {/* TESTING: auth login routes */}
                     <Route path="/auth-login/" element={<AuthLogin />} />
                     <Route
                       path="/auth-add-user"

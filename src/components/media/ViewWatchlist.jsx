@@ -16,6 +16,7 @@ export default function ViewWatchlist() {
   const [data, setData] = useState([]);
   const [movieCount, setMovieCount] = useState(0);
 
+  // check if currentUser state exists, if not get user data from localstorage
   useEffect(() => {
     if (currentUser === "") {
       setCurrentUser(localStorage.getItem("id"));
@@ -25,6 +26,7 @@ export default function ViewWatchlist() {
   // console.log("userId: ", localStorage.getItem("id"));
   // console.log("currentUser: ", currentUser);
 
+  // get currentUser's watchlist
   async function getUserWatchlist() {
     try {
       // get the imdb_ids for current user
@@ -38,7 +40,7 @@ export default function ViewWatchlist() {
         return [];
       }
 
-      // If user has no watchlist entries
+      // if user has no watchlist entries
       if (!watchlist?.length) return [];
 
       // get number of movies in watchlist
@@ -47,6 +49,7 @@ export default function ViewWatchlist() {
       // extract imdb_ids and get movie info
       const imdbIds = watchlist.map((w) => w.imdb_id);
 
+      // get movie info via imdb's from user's watchlist
       const { data: movies, error: moviesError } = await supabase
         .from("movies")
         .select("id, poster, imdb_id, title")
@@ -85,42 +88,6 @@ export default function ViewWatchlist() {
       </Link>
     );
   }
-
-  function toProperCase(str) {
-    return str
-      .toLowerCase()
-      .split(" ")
-      .map((word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      })
-      .join(" ");
-  }
-
-  useEffect(() => {
-    async function getUser() {
-      try {
-        const { data: userData, error } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", Number(localStorage.getItem("id")))
-          .maybeSingle();
-
-        if (error) {
-          console.error("getUser error:", error.message);
-          return { user: null, error };
-        }
-
-        if (userData) {
-          setCurrentUserName(userData);
-        }
-
-        return { user: null, error: { message: "No matching user found" } };
-      } catch (err) {
-        console.log("getUser: unexpected error: ", err);
-      }
-    }
-    getUser();
-  }, []);
 
   return (
     <>
@@ -165,4 +132,15 @@ export default function ViewWatchlist() {
       </div>
     </>
   );
+}
+
+// helper: format all genre words to proper case
+function toProperCase(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
 }
