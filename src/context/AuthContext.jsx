@@ -13,22 +13,6 @@ import supabase from "../utils/supabase";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  console.log("AuthContext (b4): id: ", localStorage.getItem("id"));
-  console.log(
-    "AuthContext (b4): first_name: ",
-    localStorage.getItem("first_name")
-  );
-  console.log(
-    "AuthContext (b4): last_name: ",
-    localStorage.getItem("last_name")
-  );
-  console.log("AuthContext (b4): username: ", localStorage.getItem("username"));
-  console.log(
-    "AuthContext (b4): is_active: ",
-    localStorage.getItem("is_active")
-  );
-  console.log("AuthContext (b4): is_admin: ", localStorage.getItem("is_admin"));
-
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { showModal } = useModal();
@@ -88,28 +72,6 @@ export function AuthProvider({ children }) {
       console.log("login: unexpected error: ", err);
     }
   }
-
-  console.log("AuthContext (after): id: ", localStorage.getItem("id"));
-  console.log(
-    "AuthContext (after): first_name: ",
-    localStorage.getItem("first_name")
-  );
-  console.log(
-    "AuthContext (after): last_name: ",
-    localStorage.getItem("last_name")
-  );
-  console.log(
-    "AuthContext (after): username: ",
-    localStorage.getItem("username")
-  );
-  console.log(
-    "AuthContext (after): is_active: ",
-    localStorage.getItem("is_active")
-  );
-  console.log(
-    "AuthContext (after): is_admin: ",
-    localStorage.getItem("is_admin")
-  );
 
   function logout() {
     localStorage.removeItem("id");

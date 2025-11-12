@@ -275,8 +275,9 @@ Configures Supabase client connection using your environment variables.
 - Add search functionality and genre filtering.
 - Show watchlist and genre stats per user.
 - Include analytics filtering by date range.
+- Integrate Trakt.tv API for watch tracking.
 - Public vs. private watchlists.
-- Each user can have multiple lists.
+- Each user can have custom lists.
 - Migrate to full Supabase Auth.
 - Add movie ratings and comments.
 
