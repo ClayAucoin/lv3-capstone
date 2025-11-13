@@ -62,12 +62,12 @@ export default function Navbar() {
                   <Link to="/manage-users">Manage Users</Link>
                 </div>
               )}
-            {/* {user?.is_admin && (
-          <div>
-            <span className="divider px-1">|</span>
-            <Link to="/auth-login">Auth Login</Link>
-          </div>
-        )} */}
+            {user?.is_admin && (
+              <div>
+                <span className="divider px-1">|</span>
+                <Link to="/auth-login">Auth Login</Link>
+              </div>
+            )}
           </div>
           {user && (
             <div>
