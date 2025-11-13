@@ -62,7 +62,7 @@ export default function UserForm({
   // form validation
   async function handleSubmit(e) {
     e.preventDefault();
-    // Basic validation
+    // basic validation
     if (!form.first_name) {
       return showNotice("Validation", "First name is required.", "warning");
     }
