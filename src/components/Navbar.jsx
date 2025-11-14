@@ -22,6 +22,15 @@ export default function Navbar() {
   // console.log("Navbar: first_name: ", localStorage.getItem("first_name"));
   // console.log("Navbar: last_name: ", localStorage.getItem("last_name"));
   // console.log("Navbar: username: ", localStorage.getItem("username"));
+  // console.log(
+  //   "Navbar: is_active (bool): ",
+  //   localStorage.getItem("is_active") === true
+  // );
+  // console.log(
+  //   "Navbar: is_admin (bool): ",
+  //   localStorage.getItem("is_admin") === true
+  // );
+
   // console.log("Navbar: is_active: ", localStorage.getItem("is_active"));
   // console.log("Navbar: is_admin: ", localStorage.getItem("is_admin"));
 

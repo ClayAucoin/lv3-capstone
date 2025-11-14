@@ -24,8 +24,8 @@ export function AuthProvider({ children }) {
     const storedFirstName = localStorage.getItem("first_name");
     const storedLastName = localStorage.getItem("last_name");
     const storedUser = localStorage.getItem("username");
-    const storedIsActive = localStorage.getItem("is_active");
-    const storedIsAdmin = localStorage.getItem("is_admin");
+    const storedIsActive = localStorage.getItem("is_active") === true;
+    const storedIsAdmin = localStorage.getItem("is_admin") === true;
     if (storedUser && storedUserId) {
       setUser({
         id: storedUserId,

@@ -2,7 +2,10 @@
 
 // import react hooks and components
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, Link, Navigate, useParams } from "react-router-dom";
+
+// import context
+import { useAuth } from "../../context/AuthContext";
 
 // import supabase config
 import supabase from "../../utils/supabase";
@@ -16,12 +19,29 @@ export default function ViewWatchlist() {
   const [data, setData] = useState([]);
   const [movieCount, setMovieCount] = useState(0);
 
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  console.log("ViewWatchlist: start: user.is_active", user.is_active);
+
   // check if currentUser state exists, if not get user data from localstorage
   useEffect(() => {
     if (currentUser === "") {
       setCurrentUser(localStorage.getItem("id"));
     }
+    document.title = `ViewWatchlist`;
   }, [currentUser]);
+
+  // console.log("login: user?.is_active:", user?.is_active);
+  console.log(
+    `ViewWatchlist: user?.is_active: ${
+      user?.is_active
+    }, typeof: ${typeof user?.is_active}`
+  );
+
+  if (user?.is_active) {
+    <Navigate to="/view-watchlist" replace />;
+  }
 
   // console.log("userId: ", localStorage.getItem("id"));
   // console.log("currentUser: ", currentUser);

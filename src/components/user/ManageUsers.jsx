@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 // src/components/ManageUsers.jsx
 
 // import react hooks and  components
@@ -32,9 +30,10 @@ export default function ManageUsers() {
 
   // populate logged in user from authcontext
   const { user } = useAuth();
-  if (!user || user.is_admin == false) return <Navigate to="/login" replace />;
 
-  // console.log("ManageUsers: user: ", user);
+  useEffect(() => {
+    document.title = `ManageUsers`;
+  }, []);
 
   // refreshImg users for table
   async function refreshUsers() {
@@ -51,6 +50,10 @@ export default function ManageUsers() {
         return;
       }
 
+      const { data } = await supabase.from("users").select("*").eq("id", 1);
+
+      // console.log("inside refresh:", data[0].is_admin, typeof data[0].is_admin);
+
       setUsers(users || []);
     } catch (err) {
       console.log("refreshUsers: unexpected error: ", err);
@@ -62,6 +65,15 @@ export default function ManageUsers() {
   useEffect(() => {
     refreshUsers();
   }, []);
+
+  if (!user || !user.is_admin) return <Navigate to="/user-watchlist" replace />;
+
+  console.log("ManageUsers: user?.is_active", user?.is_active);
+  console.log(
+    `ManageUsers: user?.is_active: ${
+      user?.is_active
+    }, typeof: ${typeof user?.is_active}`
+  );
 
   // modal confirmations
   function askDeleteUser(user) {
@@ -150,44 +162,54 @@ export default function ManageUsers() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  {/* <td className="col">{user.id}</td> */}
-                  <td>{user.first_name}</td>
-                  <td>{user.last_name}</td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td className="ckBoxCol">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultChecked={user.is_active}
-                      readOnly
-                    />
-                  </td>
-                  <td className="ckBoxCol">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      defaultChecked={user.is_admin}
-                      readOnly
-                    />
-                  </td>
-                  <td className="ckBoxCol">
-                    <Link to={`/edit-user/${user.id}`}>
-                      <img src={editButton} alt="Edit" className="icon" />
-                    </Link>
-                  </td>
-                  <td className="ckBoxCol">
-                    <img
-                      src={trashCan}
-                      alt="Delete"
-                      className="icon"
-                      onClick={() => askDeleteUser(user)}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {users.map(
+                ({
+                  id,
+                  first_name,
+                  last_name,
+                  username,
+                  email,
+                  is_active,
+                  is_admin,
+                }) => (
+                  <tr key={id}>
+                    {/* <td className="col">{user.id}</td> */}
+                    <td>{first_name}</td>
+                    <td>{last_name}</td>
+                    <td>{username}</td>
+                    <td>{email}</td>
+                    <td className="ckBoxCol">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        defaultChecked={is_active}
+                        readOnly
+                      />
+                    </td>
+                    <td className="ckBoxCol">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        defaultChecked={is_admin}
+                        readOnly
+                      />
+                    </td>
+                    <td className="ckBoxCol">
+                      <Link to={`/edit-user/${id}`}>
+                        <img src={editButton} alt="Edit" className="icon" />
+                      </Link>
+                    </td>
+                    <td className="ckBoxCol">
+                      <img
+                        src={trashCan}
+                        alt="Delete"
+                        className="icon"
+                        onClick={() => askDeleteUser(user)}
+                      />
+                    </td>
+                  </tr>
+                )
+              )}
             </tbody>
           </table>
           <div className="d-flex justify-content-end">

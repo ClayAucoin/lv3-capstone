@@ -178,64 +178,84 @@ export default function UserForm({
 
         <div className="row">
           <div className="col-6 mb-3">
-            <label className="form-label">First Name</label>
+            <label className="form-label" htmlFor="first_name">
+              First Name
+            </label>
             <input
               className="form-control"
+              id="first_name"
               value={form.first_name}
               onChange={(e) => updateField("first_name", e.target.value)}
+              autoComplete="given-name"
               autoFocus
             />
           </div>
           <div className="col-6 mb-3">
-            <label className="form-label">Last Name</label>
+            <label className="form-label" htmlFor="last_name">
+              Last Name
+            </label>
             <input
               className="form-control"
+              id="last_name"
               value={form.last_name}
               onChange={(e) => updateField("last_name", e.target.value)}
+              autoComplete="family-name"
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-6 mb-3">
-            <label className="form-label">Username</label>
+            <label className="form-label" htmlFor="username">
+              Username
+            </label>
             <input
               className="form-control"
+              id="username"
               value={form.username}
               onChange={(e) => updateField("username", e.target.value)}
+              autoComplete="username"
             />
           </div>
           <div className="col-6 mb-3">
-            <label className="form-label">Email</label>
+            <label className="form-label" htmlFor="email">
+              Email
+            </label>
             <input
               type="email"
               className="form-control"
+              id="email"
               value={form.email}
               onChange={(e) => updateField("email", e.target.value)}
+              autoComplete="email"
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-6">
-            <label className="form-label">
+            <label className="form-label" htmlFor="password">
               Password{mode === "edit" ? " (optional)" : ""}
             </label>
             <input
               type={showPassword ? "text" : "password"}
               className="form-control"
+              id="password"
               value={form.password || ""}
               onChange={(e) => updateField("password", e.target.value)}
-              autoComplete="new-password"
+              autoComplete={
+                mode === "edit" ? "current-password" : "new-password"
+              }
             />
           </div>
           <div className="col-6">
-            <label className="form-label">
+            <label className="form-label" htmlFor="confirmPassword">
               Confirm Password{mode === "edit" ? " (optional)" : ""}
             </label>
             <input
               type={showPassword ? "text" : "password"}
               className="form-control"
+              id="confirmPassword"
               value={form.confirmPassword || ""}
               onChange={(e) => updateField("confirmPassword", e.target.value)}
               autoComplete="new-password"
@@ -246,8 +266,8 @@ export default function UserForm({
         <div className="form-check mb-3">
           <input
             className="form-check-input"
-            type="checkbox"
             id="showPassword"
+            type="checkbox"
             defaultChecked={showPassword}
             onChange={() => setShowPassword((show) => !show)}
           />

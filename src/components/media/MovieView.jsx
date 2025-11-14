@@ -174,8 +174,8 @@ export default function MovieView() {
         <div className="text-sm-center text-lg-start text-md-start align-items-start w-100">
           {selectedMovie.title &&
             Number.isFinite(formatTitle(selectedMovie.year)) && (
-              <h1 className="display-6 fw-semibold">
-                {selectedMovie.title}
+              <>
+                <h1 className="display-6 fw-semibold">{selectedMovie.title}</h1>
                 <h3 className="fs-5 fw-semibold text-muted">
                   <small className="">
                     {selectedMovie.year &&
@@ -194,7 +194,7 @@ export default function MovieView() {
                     )}
                   </small>
                 </h3>
-              </h1>
+              </>
             )}
         </div>
       </header>

@@ -1,9 +1,11 @@
 // src/components/LoginPage.jsx
 
 // import react hooks and components
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, Link, Navigate } from "react-router-dom";
+
+// import context
 import { useAuth } from "../context/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
 
 // import modal
 import NoticeModal from "./NoticeModal";
@@ -17,8 +19,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { user, setUser, login, requestLogout } = useAuth();
+  const { user, setUser, login } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = `Login`;
+  }, []);
+
+  // console.log("login: user?.is_active:", user?.is_active);
+  console.log(
+    `login: user?.is_active: ${
+      user?.is_active
+    }, typeof: ${typeof user?.is_active}`
+  );
+
+  if (user?.is_active) {
+    <Navigate to="/view-watchlist" replace />;
+  }
 
   const [modal, setModal] = useState({
     show: false,
@@ -90,6 +107,7 @@ export default function LoginPage() {
                   className="form-control form-control-sm"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
                   autoFocus
                 />
               </label>
@@ -103,6 +121,7 @@ export default function LoginPage() {
                   className="form-control form-control-sm"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password"
                 />
               </label>
             </div>

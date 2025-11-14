@@ -1,8 +1,10 @@
 // src/components/EditUser.jsx
 
 // import react hooks and components
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
+import { useAuth } from "../../context/AuthContext";
 
 // import supabase config
 import supabase from "../../utils/supabase";
@@ -14,6 +16,25 @@ export default function EditUser() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [initial, setInitial] = useState(null);
+
+  const { user, setUser, login, requestLogout } = useAuth();
+
+  useEffect(() => {
+    document.title = `EditUser`;
+  }, []);
+
+  console.log("login", user);
+  console.log(
+    `login: user.is_admin: ${
+      user?.is_active
+    }, typeof: ${typeof user?.is_active}`
+  );
+
+  if (user?.is_active) {
+    <Navigate to="/view-watchlist" replace />;
+  } else if (user?.is_admin) {
+    <Navigate to="/manage-users" replace />;
+  }
 
   // get current user's info from dB and populate form
   useEffect(() => {

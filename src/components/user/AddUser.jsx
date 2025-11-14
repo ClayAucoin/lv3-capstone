@@ -26,6 +26,10 @@ export default function AddUser() {
   });
 
   useEffect(() => {
+    document.title = `AddUser`;
+  }, []);
+
+  useEffect(() => {
     // change for testing or not
     setIsTesting(true);
     // setIsTesting(false);
