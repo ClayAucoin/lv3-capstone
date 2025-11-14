@@ -78,13 +78,8 @@ export default function ViewWatchlist() {
     const movie = data[i];
 
     movieGridJSX.push(
-      <Link to={`/movie-view/${movie.imdb_id}`}>
-        <img
-          key={movie.imdb_id}
-          className="movie-poster"
-          src={movie.poster}
-          alt={movie.title}
-        />{" "}
+      <Link key={movie.imdb_id} to={`/movie-view/${movie.imdb_id}`}>
+        <img className="movie-poster" src={movie.poster} alt={movie.title} />
       </Link>
     );
   }
@@ -95,7 +90,8 @@ export default function ViewWatchlist() {
         <main>
           <section className="text-center mt-4 mb-3">
             <h1 className="display-6 fw-semibold">
-              {currentUserName.first_name} {currentUserName.last_name}
+              {localStorage.getItem("first_name")}{" "}
+              {localStorage.getItem("last_name")}
             </h1>
             {movieCount === 0 ? (
               <h3 className="display-6 fw-medium my-4 p-0">

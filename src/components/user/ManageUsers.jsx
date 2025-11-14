@@ -83,13 +83,27 @@ export default function ManageUsers() {
       // Optimistic UI update
       setUsers((prev) => prev.filter((u) => u.id !== id));
 
-      const { error } = await supabase.from("users").delete().eq("id", id);
+      const { errorUser } = await supabase.from("users").delete().eq("id", id);
+      const { errorWatchlist } = await supabase
+        .from("watchlist")
+        .delete()
+        .eq("user_id", id);
 
-      if (error) {
-        console.error("confirmDelete: delete failed: ", error);
+      if (errorUser) {
+        console.error("confirmDelete user: delete failed: ", errorUser);
         await refreshUsers();
         return;
       }
+
+      if (errorWatchlist) {
+        console.error(
+          "confirmDelete watchlist: delete failed: ",
+          errorWatchlist
+        );
+        await refreshUsers();
+        return;
+      }
+
       closeConfirm();
     } catch (err) {
       console.log("confirmDelete: unexpected error: ", err);

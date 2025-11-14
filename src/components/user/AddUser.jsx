@@ -13,7 +13,7 @@ import UserForm from "./UserForm";
 export default function AddUser() {
   const navigate = useNavigate();
 
-  const [isTesting, setIsTesting] = useState("");
+  const [isTesting, setIsTesting] = useState(false);
   const [defaultValues, setDefaultValues] = useState({
     is_active: true,
     is_admin: false,
@@ -28,6 +28,7 @@ export default function AddUser() {
   useEffect(() => {
     // change for testing or not
     setIsTesting(true);
+    // setIsTesting(false);
 
     if (isTesting) {
       setDefaultValues({

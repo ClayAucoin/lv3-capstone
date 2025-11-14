@@ -88,11 +88,11 @@ export default function AuthLogin() {
                 Create User
               </button>
             </Link>
-            <Link to="/auth-delete-user">
+            {/* <Link to="/auth-delete-user">
               <button className="btn btn-primary for-form mt-2">
                 Delete User
               </button>
-            </Link>
+            </Link> */}
           </form>
 
           {/* <NoticeModal
