@@ -1,6 +1,7 @@
 // src/components/Navbar.jsx
 
 // import react hooks and components
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -16,7 +17,8 @@ export default function Navbar() {
     .replace(/^((?:\/[^/]+){1}).*$/, "$1")
     .replace(/\/$/, "");
 
-  // console.log("Navbar: user: ", user);
+  // console.log("Navbar: user: ", user?.is_admin, typeof user?.is_admin);
+
   // console.log("Navbar: basePath: ", basePath);
   // console.log("Navbar: id: ", localStorage.getItem("id"));
   // console.log("Navbar: first_name: ", localStorage.getItem("first_name"));

@@ -68,12 +68,12 @@ export default function ManageUsers() {
 
   if (!user || !user.is_admin) return <Navigate to="/user-watchlist" replace />;
 
-  console.log("ManageUsers: user?.is_active", user?.is_active);
-  console.log(
-    `ManageUsers: user?.is_active: ${
-      user?.is_active
-    }, typeof: ${typeof user?.is_active}`
-  );
+  // console.log("ManageUsers: user?.is_active", user?.is_active);
+  // console.log(
+  //   `ManageUsers: user?.is_active: ${
+  //     user?.is_active
+  //   }, typeof: ${typeof user?.is_active}`
+  // );
 
   // modal confirmations
   function askDeleteUser(user) {

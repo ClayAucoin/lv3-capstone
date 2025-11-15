@@ -91,12 +91,7 @@ export function AuthProvider({ children }) {
 
   // logout user
   function logout() {
-    localStorage.removeItem("id");
-    localStorage.removeItem("first_name");
-    localStorage.removeItem("last_name");
-    localStorage.removeItem("username");
-    localStorage.removeItem("is_active");
-    localStorage.removeItem("is_admin");
+    localStorage.clear();
     setUser(null);
     navigate("/login");
   }

@@ -23,12 +23,12 @@ export default function EditUser() {
     document.title = `EditUser`;
   }, []);
 
-  console.log("login", user);
-  console.log(
-    `login: user.is_admin: ${
-      user?.is_active
-    }, typeof: ${typeof user?.is_active}`
-  );
+  // console.log("login", user);
+  // console.log(
+  //   `login: user.is_admin: ${
+  //     user?.is_active
+  //   }, typeof: ${typeof user?.is_active}`
+  // );
 
   if (user?.is_active) {
     <Navigate to="/view-watchlist" replace />;

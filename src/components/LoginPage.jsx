@@ -27,11 +27,11 @@ export default function LoginPage() {
   }, []);
 
   // console.log("login: user?.is_active:", user?.is_active);
-  console.log(
-    `login: user?.is_active: ${
-      user?.is_active
-    }, typeof: ${typeof user?.is_active}`
-  );
+  // console.log(
+  //   `login: user?.is_active: ${
+  //     user?.is_active
+  //   }, typeof: ${typeof user?.is_active}`
+  // );
 
   if (user?.is_active) {
     <Navigate to="/view-watchlist" replace />;

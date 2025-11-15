@@ -22,7 +22,7 @@ export default function ViewWatchlist() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  console.log("ViewWatchlist: start: user.is_active", user.is_active);
+  // console.log("ViewWatchlist: start: user.is_active", user.is_active);
 
   // check if currentUser state exists, if not get user data from localstorage
   useEffect(() => {
@@ -33,11 +33,11 @@ export default function ViewWatchlist() {
   }, [currentUser]);
 
   // console.log("login: user?.is_active:", user?.is_active);
-  console.log(
-    `ViewWatchlist: user?.is_active: ${
-      user?.is_active
-    }, typeof: ${typeof user?.is_active}`
-  );
+  // console.log(
+  //   `ViewWatchlist: user?.is_active: ${
+  //     user?.is_active
+  //   }, typeof: ${typeof user?.is_active}`
+  // );
 
   if (user?.is_active) {
     <Navigate to="/view-watchlist" replace />;
