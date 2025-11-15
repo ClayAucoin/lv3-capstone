@@ -17,7 +17,7 @@ export default function Navbar() {
     .replace(/^((?:\/[^/]+){1}).*$/, "$1")
     .replace(/\/$/, "");
 
-  console.log("Navbar: user: ", user?.is_admin, typeof user?.is_admin);
+  // console.log("Navbar: user: ", user?.is_admin, typeof user?.is_admin);
 
   // console.log("Navbar: basePath: ", basePath);
   // console.log("Navbar: id: ", localStorage.getItem("id"));
