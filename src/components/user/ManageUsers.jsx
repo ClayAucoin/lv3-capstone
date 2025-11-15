@@ -88,6 +88,7 @@ export default function ManageUsers() {
   async function confirmDelete() {
     try {
       const id = confirm.user?.id;
+
       // console.log(`confirmDelete - Deleting: ${id}, typeof: ${typeof id}`);
 
       if (!id) return;
@@ -146,7 +147,7 @@ export default function ManageUsers() {
           <table className="table">
             <thead>
               <tr>
-                {/* <th scope="col">ID</th> */}
+                <th scope="col">ID</th>
                 <th scope="col">First Name</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">Username</th>
@@ -162,54 +163,44 @@ export default function ManageUsers() {
               </tr>
             </thead>
             <tbody>
-              {users.map(
-                ({
-                  id,
-                  first_name,
-                  last_name,
-                  username,
-                  email,
-                  is_active,
-                  is_admin,
-                }) => (
-                  <tr key={id}>
-                    {/* <td className="col">{user.id}</td> */}
-                    <td>{first_name}</td>
-                    <td>{last_name}</td>
-                    <td>{username}</td>
-                    <td>{email}</td>
-                    <td className="ckBoxCol">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultChecked={is_active}
-                        readOnly
-                      />
-                    </td>
-                    <td className="ckBoxCol">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        defaultChecked={is_admin}
-                        readOnly
-                      />
-                    </td>
-                    <td className="ckBoxCol">
-                      <Link to={`/edit-user/${id}`}>
-                        <img src={editButton} alt="Edit" className="icon" />
-                      </Link>
-                    </td>
-                    <td className="ckBoxCol">
-                      <img
-                        src={trashCan}
-                        alt="Delete"
-                        className="icon"
-                        onClick={() => askDeleteUser(user)}
-                      />
-                    </td>
-                  </tr>
-                )
-              )}
+              {users.map((user) => (
+                <tr key={user.id}>
+                  <td className="col">{user.id}</td>
+                  <td>{user.first_name}</td>
+                  <td>{user.last_name}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td className="ckBoxCol">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      defaultChecked={user.is_active}
+                      readOnly
+                    />
+                  </td>
+                  <td className="ckBoxCol">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      defaultChecked={user.is_admin}
+                      readOnly
+                    />
+                  </td>
+                  <td className="ckBoxCol">
+                    <Link to={`/edit-user/${user.id}`}>
+                      <img src={editButton} alt="Edit" className="icon" />
+                    </Link>
+                  </td>
+                  <td className="ckBoxCol">
+                    <img
+                      src={trashCan}
+                      alt="Delete"
+                      className="icon"
+                      onClick={() => askDeleteUser(user)}
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
           <div className="d-flex justify-content-end">

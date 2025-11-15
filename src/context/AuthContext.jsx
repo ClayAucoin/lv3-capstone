@@ -24,8 +24,9 @@ export function AuthProvider({ children }) {
     const storedFirstName = localStorage.getItem("first_name");
     const storedLastName = localStorage.getItem("last_name");
     const storedUser = localStorage.getItem("username");
-    const storedIsActive = localStorage.getItem("is_active") === true;
-    const storedIsAdmin = localStorage.getItem("is_admin") === true;
+    const storedIsActive = getBoolFromLocalStorage("is_active");
+    const storedIsAdmin = getBoolFromLocalStorage("is_admin");
+
     if (storedUser && storedUserId) {
       setUser({
         id: storedUserId,
@@ -109,4 +110,9 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
   return useContext(AuthContext);
+}
+
+// helper: make sure localStorage returns bool
+function getBoolFromLocalStorage(key) {
+  return localStorage.getItem(key) === "true";
 }
