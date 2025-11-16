@@ -11,6 +11,9 @@ import supabase from "../../utils/supabase";
 // import css
 import "./PickMovie.css";
 
+// import helper functions
+import { displayName } from "../../utils/helpers";
+
 export default function PickMovie() {
   const [currentGenre, setCurrentGenre] = useState("");
   const [data, setData] = useState([]);
@@ -174,10 +177,16 @@ export default function PickMovie() {
       <header className="m-1">
         {user.first_name && (
           <h1 className="display-6 fw-semibold text-center m-2 w-100">
-            {user.first_name} {user.last_name}'s Watchlist
+            {displayName({
+              fname: user.first_name,
+              lname: user.last_name,
+            })}
+            's Watchlist
           </h1>
         )}
-        <h4 className="fs-3 fw-semibold m-2 w-100 text-center">Add A Movie</h4>
+        <h4 className="fs-3 fw-semibold m-2 w-100 text-center">
+          To Add A Movie
+        </h4>
 
         <nav className="d-flex justify-content-center m-2 w-100">
           <div className="genre-flex">{genreButtonsJSX}</div>
@@ -226,14 +235,4 @@ export default function PickMovie() {
       </main>
     </div>
   );
-}
-
-function toProperCase(str) {
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(" ");
 }

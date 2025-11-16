@@ -20,6 +20,9 @@ import MovieStats from "./movieContent/MovieStats";
 // import css
 import "./MovieView.css";
 
+// import helper functions
+import { toProperCase, formatTime } from "../../utils/helpers";
+
 export default function MovieView() {
   const { user } = useAuth();
   const { imdbId, genre } = useParams();
@@ -151,7 +154,9 @@ export default function MovieView() {
             </Link>
           ) : (
             <Link to={`/pick-movie/${currentGenre.toLowerCase()}`}>
-              <button className="btn btn-primary">← Back to Pick Movie</button>
+              <button className="btn btn-primary">
+                ← Back to {toProperCase(currentGenre)}
+              </button>
             </Link>
           )}
           {movieInWatchlist ? (
@@ -164,11 +169,6 @@ export default function MovieView() {
             </button>
           )}
         </div>
-        {currentGenre && (
-          <h5 className="mt-2 text-center text-lg-start">
-            Genre: {formatGenre(currentGenre)}
-          </h5>
-        )}
       </nav>
       <header className="my-3">
         <div className="text-sm-center text-lg-start text-md-start align-items-start w-100">
@@ -186,7 +186,7 @@ export default function MovieView() {
                         {selectedMovie.rating}
                       </>
                     )}
-                    {selectedMovie.runtime && (
+                    {selectedMovie.runtime > 0 && (
                       <>
                         <span className="mx-1">•</span>
                         {formatTime(selectedMovie.runtime)}
@@ -226,38 +226,4 @@ export default function MovieView() {
       </main>
     </div>
   );
-}
-
-// helper: format genre case
-function formatGenre(genreString) {
-  if (!genreString) return "";
-  return genreString.charAt(0).toUpperCase() + genreString.slice(1);
-}
-
-// helper: format movie duration from 01:45:42 to 1h 45m
-function formatTime(timeStr) {
-  const parts = timeStr.split(":").map(Number);
-
-  let hours = 0,
-    minutes = 0,
-    seconds = 0;
-
-  if (parts.length === 3) {
-    [hours, minutes, seconds] = parts;
-  } else if (parts.length === 2) {
-    [minutes, seconds] = parts;
-  } else if (parts.length === 1) {
-    seconds = parts[0];
-  }
-
-  minutes += Math.floor(seconds / 60);
-  seconds = seconds % 60;
-  hours += Math.floor(minutes / 60);
-  minutes = minutes % 60;
-
-  if (hours > 0) {
-    return `${hours}h ${minutes}m`;
-  } else {
-    return `${minutes}m`;
-  }
 }

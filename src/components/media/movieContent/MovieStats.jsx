@@ -1,5 +1,12 @@
 // src/components/media/movieContent/MovieStats.jsx
 
+// import helper functions
+import {
+  convertToCurrency,
+  formatGenres,
+  formatDate,
+} from "../../../utils/helpers";
+
 export default function MovieStats({ data }) {
   return (
     <ul className="list-unstyled lh-lg mb-0 small">
@@ -53,40 +60,4 @@ export default function MovieStats({ data }) {
       )}
     </ul>
   );
-}
-
-// helper: convert number from dB to currency
-function convertToCurrency(amount) {
-  const usdFormatted = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-    minimumFractionDigits: 0,
-  }).format(amount);
-
-  return usdFormatted;
-}
-
-// helper: format all words in genre to proper case
-function formatGenres(genreString) {
-  if (!genreString) return "";
-  return genreString
-    .split(",")
-    .map((g) => g.trim())
-    .map((g) => g.charAt(0).toUpperCase() + g.slice(1))
-    .join(", ");
-}
-
-// helper: formats date to Jan 1, 2000
-function formatDate(dateStr) {
-  if (!dateStr) return "";
-
-  const date = new Date(dateStr);
-  if (isNaN(date)) return dateStr;
-
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
 }

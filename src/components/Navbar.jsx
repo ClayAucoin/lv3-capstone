@@ -5,6 +5,9 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+// import helper functions
+import { displayName } from "../utils/helpers";
+
 // import css
 import "./Navbar.css";
 
@@ -83,7 +86,7 @@ export default function Navbar() {
           {user && (
             <div>
               <span className="me-3">
-                Logged in as: <b>{user.first_name}</b>
+                Logged in as: <b>{displayName({ fname: user.first_name })}</b>
               </span>
               <button
                 className="btn btn-outline-secondary logout-button"

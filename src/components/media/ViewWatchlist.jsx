@@ -13,6 +13,9 @@ import supabase from "../../utils/supabase";
 // import css
 import "./ViewWatchlist.css";
 
+// import helper functions
+import { displayName } from "../../utils/helpers";
+
 export default function ViewWatchlist() {
   const [currentUser, setCurrentUser] = useState("");
   const [currentUserName, setCurrentUserName] = useState([]);
@@ -109,9 +112,11 @@ export default function ViewWatchlist() {
       <div className="container">
         <main>
           <section className="text-center mt-4 mb-3">
-            <h1 className="display-6 fw-semibold">
-              {localStorage.getItem("first_name")}{" "}
-              {localStorage.getItem("last_name")}
+            <h1 className="display-6 fw-semibold text-proper">
+              {displayName({
+                fname: localStorage.getItem("first_name"),
+                lname: localStorage.getItem("last_name"),
+              })}
             </h1>
             {movieCount === 0 ? (
               <h3 className="display-6 fw-medium my-4 p-0">
@@ -137,7 +142,6 @@ export default function ViewWatchlist() {
                 </button>
               </Link>
             </div>
-
             {movieCount > 0 && (
               <article className="movie-grid text-center">
                 {movieGridJSX}
@@ -148,15 +152,4 @@ export default function ViewWatchlist() {
       </div>
     </>
   );
-}
-
-// helper: format all genre words to proper case
-function toProperCase(str) {
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join(" ");
 }
