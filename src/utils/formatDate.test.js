@@ -3,6 +3,13 @@
 import { expect, describe, it } from "vitest";
 import { formatDate, formatISODate } from "./helpers"
 
+/*
+  FYI, all of these tests are duplicated from the ones that you taught 
+  us to do. I did the ones at the bottom that are commented out first. 
+  ChatGPT showed me how to do the testing at the top when I asked it for 
+  some examples of dates to test for.
+*/
+
 // formatISODate function
 //    formatISODate('2020-03-15') → date
 //    would output: Mar 15, 2020

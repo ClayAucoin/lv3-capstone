@@ -1,6 +1,14 @@
+// formatTime.test.js
 
 import { expect, describe, it } from "vitest";
 import { formatTime } from "./helpers"
+
+/*
+  FYI, all of these tests are duplicated from the ones that you taught 
+  us to do. I did the ones at the bottom that are commented out first. 
+  ChatGPT showed me how to do the testing at the top when I asked it for 
+  some examples of times to test for.
+*/
 
 // formatTime function
 //    formatTime('01:41:11') → string

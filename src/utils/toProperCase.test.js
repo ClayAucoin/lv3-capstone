@@ -1,3 +1,5 @@
+// toProperCase.test.js
+
 import { expect, describe, it } from "vitest";
 import { toProperCase } from "./helpers"
 
