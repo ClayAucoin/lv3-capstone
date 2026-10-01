@@ -34,32 +34,10 @@ The app was designed as a Capstone project to demonstrate the integration of Rea
 
 ## Screenshots
 
-<table width="100%" border="0">
-  <tr>
-    <td width="50%">
-      <img src="src/images/1-view-watchlist.png" alt="View Watchlist">
-    </td>
-    <td width="50%">
-      <img src="src/images/2-pick-movie.png" alt="Pick Movie">
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="src/images/3-movie-view.png" alt="Movie View">
-    </td>
-    <td width="50%">
-      <img src="src/images/6-analytics.png" alt="Analytics">
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="src/images/4-manage-users.png" alt="Manage Users">
-    </td>
-    <td width="50%">
-      <img src="src/images/5-edit-user.png" alt="Edit User">
-    </td>
-  </tr>
-</table>
+| ![View Watchlist](src/images/1-view-watchlist.png) | ![Pick Movie](src/images/2-pick-movie.png) |
+| -------------------------------------------------- | ------------------------------------------ |
+| ![Movie View](src/images/3-movie-view.png)         | ![Analytics](src/images/6-analytics.png)   |
+| ![Manage Users](src/images/4-manage-users.png)     | ![Edit User](src/images/5-edit-user.png)   |
 
 ---
 
@@ -207,6 +185,7 @@ npm run dev
 
 ## Folder Structure
 
+```text
     src/
     ├── components/
     │   ├── media/
@@ -236,6 +215,7 @@ npm run dev
     ├── utils/
     │   └── supabase.js
     └── App.jsx
+```
 
 ---
 
